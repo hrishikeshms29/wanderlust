@@ -1,0 +1,39 @@
+<!-- templates/all_buses.html -->
+
+{% extends 'base.html' %}
+>
+{% block title %}All Buses{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="display-4">All Buses</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Bus ID</th>
+                    <th scope="col">Bus Name</th>
+                    <th scope="col">Departure City</th>
+                    <th scope="col">Arrival City</th>
+                    <th scope="col">Departure Time</th>
+                    <th scope="col">Arrival Time</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Image</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for bus in buses %}
+                    <tr>
+                        <th scope="row">{{ bus.BusID }}</th>
+                        <td>{{ bus.BusName }}</td>
+                        <td>{{ bus.DepartureCity }}</td>
+                        <td>{{ bus.ArrivalCity }}</td>
+                        <td>{{ bus.DepartureTime }}</td>
+                        <td>{{ bus.ArrivalTime }}</td>
+                        <td>{{ bus.Price }}</td>
+                        <td>{{ bus.Image }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{%endblock%}

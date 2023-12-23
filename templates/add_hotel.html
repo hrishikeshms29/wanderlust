@@ -1,0 +1,27 @@
+<!-- add_hotel.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Hotel</title>
+</head>
+<body>
+    <h2>Add Hotel</h2>
+    <form method="POST" action="{{ url_for('add_hotel') }}">
+        <label for="hotel_name">Hotel Name:</label>
+        <input type="text" name="hotel_name" required><br>
+
+        <label for="location">Location:</label>
+        <input type="text" name="location" required><br>
+
+        <label for="description">Description:</label>
+        <textarea name="description" required></textarea><br>
+
+        <button type="submit">Add Hotel</button>
+    </form>
+
+    <!-- Link to add rooms -->
+    <a href="{{ url_for('add_room') }}">Add Rooms</a>
+</body>
+</html>

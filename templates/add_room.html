@@ -1,0 +1,34 @@
+<!-- add_room.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Room</title>
+</head>
+<body>
+    <h2>Add Room</h2>
+    <form method="POST" action="{{ url_for('add_room') }}">
+        <label for="hotel_id">Hotel:</label>
+        <select name="hotel_id" required>
+            {% for hotel in hotels %}
+                <option value="{{ hotel.HotelID }}">{{ hotel.HotelName }}</option>
+            {% endfor %}
+        </select><br>
+
+        <label for="room_number">Room Number:</label>
+        <input type="number" name="room_number" required><br>
+
+        <label for="capacity">Capacity:</label>
+        <input type="number" name="capacity" required><br>
+
+        <label for="price_per_night">Price per Night:</label>
+        <input type="number" name="price_per_night" step="0.01" required><br>
+
+        <label for="image">Image:</label>
+        <input type="text" name="image" required><br>
+
+        <button type="submit">Add Room</button>
+    </form>
+</body>
+</html>

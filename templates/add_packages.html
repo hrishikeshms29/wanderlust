@@ -1,0 +1,30 @@
+<!-- add_packages.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Package</title>
+</head>
+<body>
+    <h2>Add Package</h2>
+    <form method="POST" action="{{ url_for('add_package') }}">
+        <label for="package_name">Package Name:</label>
+        <input type="text" name="package_name" required><br>
+
+        <label for="description">Description:</label>
+        <textarea name="description" rows="4" required></textarea><br>
+
+        <label for="price">Price:</label>
+        <input type="number" name="price" step="0.01" required><br>
+
+        <label for="duration">Duration (in days):</label>
+        <input type="number" name="duration" required><br>
+
+        <label for="image">Image:</label>
+        <input type="file" name="image" accept="image/*" required><br>
+
+        <button type="submit">Add Package</button>
+    </form>
+</body>
+</html>

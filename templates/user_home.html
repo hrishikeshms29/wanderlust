@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}User Home{% endblock %}
+
+{% block content %}
+    <div class="jumbotron">
+        <h1 class="display-4">Welcome, {{ username }}!</h1>
+        <p class="lead">Explore the options below:</p>
+        <hr class="my-4">
+        <a class="btn btn-primary btn-lg" href="/logout" role="button">Logout</a>
+        <a class="btn btn-success btn-lg" href="{{ url_for('all_buses') }}" role="button">All Buses</a>
+        <a class="btn btn-info btn-lg" href="{{ url_for('all_packages') }}" role="button">All Packages</a>
+    </div>
+{%endblock%}

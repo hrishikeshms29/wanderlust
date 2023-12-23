@@ -1,0 +1,48 @@
+<!-- templates/home.html -->
+
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <div class="container text-center mt-5">
+        <h1 class="display-4">Welcome to Wanderlust!</h1>
+        <p class="lead">Choose your role:</p>
+
+        <!-- Options to choose between User and Service Provider -->
+        <div class="user_btn mt-3 mb-3 offset-0" role="group">
+            <button class="btn btn-primary" onclick="showUserOptions()">User</button>
+        </div>
+        <div class="server_btn mb-3" role="group">
+            <button class="btn btn-primary" onclick="showProviderOptions()">Service Provider</button>
+        </div>
+
+        <!-- Options for User -->
+        <div id="userOptions" class="mt-4" style="display: none;">
+            <a href="{{ url_for('login') }}" class="btn btn-primary btn-lg btn-block">User Login</a>
+            <a href="{{ url_for('signup') }}" class="btn btn-success btn-lg btn-block mt-3">User Signup</a>
+        </div>
+
+        <!-- Options for Service Provider -->
+        <div id="providerOptions" class="mt-4" style="display: none;">
+            <a href="{{ url_for('provider_login') }}" class="btn btn-primary btn-lg btn-block">Service Provider Login</a>
+            <a href="{{ url_for('provider_signup') }}" class="btn btn-success btn-lg btn-block mt-3">Service Provider Signup</a>
+        </div>
+    </div>
+
+    <script>
+        // Initialize the options
+        document.getElementById('userOptions').style.display = 'none';
+        document.getElementById('providerOptions').style.display = 'none';
+
+        function showUserOptions() {
+            document.getElementById('userOptions').style.display = 'block';
+            document.getElementById('providerOptions').style.display = 'none';
+        }
+
+        function showProviderOptions() {
+            document.getElementById('userOptions').style.display = 'none';
+            document.getElementById('providerOptions').style.display = 'block';
+        }
+    </script>
+{%endblock%}
