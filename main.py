@@ -646,6 +646,24 @@ def delete_bus(bus_id):
 
     return 'You are not authorized to access this page.'
 
+@app.route('/delete_package/<int:package_id>')
+@login_required
+def delete_package(package_id):
+    if isinstance(current_user, ServiceProvider):
+        # Find the package in the database
+        package = Package.query.get(package_id)
+
+        if package:
+            # Perform the deletion logic (e.g., db.session.delete(package))
+            # Commit the changes to the database
+            # Redirect to the manage services page or home page
+            flash('Package deleted successfully!', 'success')
+            return redirect(url_for('manage_services'))
+
+        flash('Package not found!', 'error')
+        return redirect(url_for('manage_services'))
+
+    return 'You are not authorized to access this page.'
 
 if __name__ == '__main__':
     with app.app_context():
