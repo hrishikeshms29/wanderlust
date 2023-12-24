@@ -529,6 +529,117 @@ def add_package():
 
     return 'You are not authorized to access this page.'
 
+# Route for managing hotels, buses, and packages
+@app.route('/manage_services', methods=['GET', 'POST'])
+@login_required
+def manage_services():
+    if isinstance(current_user, ServiceProvider):
+        # Fetch hotels, buses, and packages associated with the current service provider
+        hotels = Hotel.query.filter_by(ServiceProviderID=current_user.ServiceProviderID).all()
+        buses = Bus.query.filter_by(ServiceProviderID=current_user.ServiceProviderID).all()
+        packages = Package.query.filter_by(ServiceProviderID=current_user.ServiceProviderID).all()
+
+        if request.method == 'POST':
+            # Process form data to delete selected services
+            service_type = request.form['service_type']
+            service_id = request.form['service_id']
+
+            # Determine the service type and delete the selected service
+            if service_type == 'hotel':
+                Hotel.query.filter_by(HotelID=service_id).delete()
+            elif service_type == 'bus':
+                Bus.query.filter_by(BusID=service_id).delete()
+            elif service_type == 'package':
+                Package.query.filter_by(PackageID=service_id).delete()
+
+            # Commit changes to the database
+            db.session.commit()
+
+            flash(f'{service_type.capitalize()} deleted successfully!', 'success')
+
+            # Redirect back to the manage_services page
+            return redirect(url_for('manage_services'))
+
+        # Provide hotels, buses, and packages to the template
+        return render_template('manage_services.html', username=current_user.Username, hotels=hotels, buses=buses, packages=packages)
+
+    return 'You are not authorized to access this page.'
+
+
+#update
+# Add a new route to update an existing hotel
+@app.route('/update_hotel/<int:hotel_id>', methods=['GET', 'POST'])
+@login_required
+def update_hotel(hotel_id):
+    if isinstance(current_user, ServiceProvider):
+        hotel = Hotel.query.get(hotel_id)
+
+        if request.method == 'POST':
+            # Process form data
+            hotel.HotelName = request.form['hotel_name']
+            hotel.Location = request.form['location']
+            hotel.Description = request.form['description']
+
+            # Update the hotel in the database
+            db.session.commit()
+
+            flash('Hotel updated successfully!')
+            return redirect(url_for('provider_home'))
+
+        return render_template('update_hotel.html', username=current_user.Username, hotel=hotel)
+
+    return 'You are not authorized to access this page.'
+
+# Add a new route to update an existing bus
+@app.route('/update_bus/<int:bus_id>', methods=['GET', 'POST'])
+@login_required
+def update_bus(bus_id):
+    if isinstance(current_user, ServiceProvider):
+        bus = Bus.query.get(bus_id)
+
+        if request.method == 'POST':
+            # Process form data
+            bus.BusName = request.form['bus_name']
+            bus.DepartureCity = request.form['departure_city']
+            bus.ArrivalCity = request.form['arrival_city']
+            bus.DepartureTime = datetime.strptime(request.form['departure_time'], '%Y-%m-%dT%H:%M')
+            bus.ArrivalTime = datetime.strptime(request.form['arrival_time'], '%Y-%m-%dT%H:%M')
+            bus.Price = float(request.form['price'])
+
+            # Update the bus in the database
+            db.session.commit()
+
+            flash('Bus updated successfully!')
+            return redirect(url_for('provider_home'))
+
+        return render_template('update_bus.html', username=current_user.Username, bus=bus)
+
+    return 'You are not authorized to access this page.'
+
+# Add a new route to update an existing package
+@app.route('/update_package/<int:package_id>', methods=['GET', 'POST'])
+@login_required
+def update_package(package_id):
+    if isinstance(current_user, ServiceProvider):
+        package = Package.query.get(package_id)
+
+        if request.method == 'POST':
+            # Process form data
+            package.PackageName = request.form['package_name']
+            package.Description = request.form['description']
+            package.Price = float(request.form['price'])
+            package.Duration = int(request.form['duration'])
+
+            # Update the package in the database
+            db.session.commit()
+
+            flash('Package updated successfully!')
+            return redirect(url_for('provider_home'))
+
+        return render_template('update_package.html', username=current_user.Username, package=package)
+
+    return 'You are not authorized to access this page.'
+
 
 if __name__ == '__main__':
     with app.app_context():

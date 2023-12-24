@@ -5,8 +5,13 @@
 
 {% block content %}
     <h1>Welcome, {{ username }}!</h1>
+
     <a href="{{ url_for('add_hotel') }}">Add Hotel</a>
     <a href="{{ url_for('add_bus') }}">Add Bus</a>
     <a href="{{ url_for('add_package') }}">Add Package</a>
+
+    <!-- New link to manage services -->
+    <a href="{{ url_for('manage_services') }}">Manage Services</a>
+
     <a href="/logout">Logout</a>
 {% endblock %}
