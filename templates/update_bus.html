@@ -1,10 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<!-- templates/update_bus.html -->
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block title %}Update Bus{% endblock %}
+
+{% block content %}
+    <h1>Update Bus</h1>
+    <form method="POST" action="{{ url_for('update_bus', bus_id=bus.BusID) }}">
+        <!-- Form fields to update bus details -->
+        <label for="bus_name">Bus Name:</label>
+        <input type="text" name="bus_name" value="{{ bus.BusName }}" required><br>
+
+        <label for="departure_city">Departure City:</label>
+        <input type="text" name="departure_city" value="{{ bus.DepartureCity }}" required><br>
+
+        <label for="arrival_city">Arrival City:</label>
+        <input type="text" name="arrival_city" value="{{ bus.ArrivalCity }}" required><br>
+
+        <label for="departure_time">Departure Time:</label>
+        <input type="datetime-local" name="departure_time" value="{{ bus.DepartureTime|datetimeformat }}" required><br>
+
+        <label for="arrival_time">Arrival Time:</label>
+        <input type="datetime-local" name="arrival_time" value="{{ bus.ArrivalTime|datetimeformat }}" required><br>
+
+        <label for="price">Price:</label>
+        <input type="number" name="price" step="0.01" value="{{ bus.Price }}" required><br>
+
+        <button type="submit">Update Bus</button>
+    </form>
+{% endblock %}

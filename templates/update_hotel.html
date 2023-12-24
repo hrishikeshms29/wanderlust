@@ -1,10 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<!-- templates/update_hotel.html -->
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block title %}Update Hotel{% endblock %}
+
+{% block content %}
+    <h1>Update Hotel</h1>
+    <form method="POST" action="{{ url_for('update_hotel', hotel_id=hotel.HotelID) }}">
+        <!-- Form fields to update hotel details -->
+        <label for="hotel_name">Hotel Name:</label>
+        <input type="text" name="hotel_name" value="{{ hotel.HotelName }}" required><br>
+
+        <label for="location">Location:</label>
+        <input type="text" name="location" value="{{ hotel.Location }}" required><br>
+
+        <label for="description">Description:</label>
+        <textarea name="description" required>{{ hotel.Description }}</textarea><br>
+
+        <button type="submit">Update Hotel</button>
+    </form>
+{% endblock %}

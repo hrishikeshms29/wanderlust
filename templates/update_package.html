@@ -1,10 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<!-- templates/update_package.html -->
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block title %}Update Package{% endblock %}
+
+{% block content %}
+    <h1>Update Package</h1>
+    <form method="POST" action="{{ url_for('update_package', package_id=package.PackageID) }}">
+        <!-- Form fields to update package details -->
+        <label for="package_name">Package Name:</label>
+        <input type="text" name="package_name" value="{{ package.PackageName }}" required><br>
+
+        <label for="description">Description:</label>
+        <textarea name="description" required>{{ package.Description }}</textarea><br>
+
+        <label for="price">Price:</label>
+        <input type="number" name="price" step="0.01" value="{{ package.Price }}" required><br>
+
+        <label for="duration">Duration (in days):</label>
+        <input type="number" name="duration" value="{{ package.Duration }}" required><br>
+
+        <button type="submit">Update Package</button>
+    </form>
+{% endblock %}

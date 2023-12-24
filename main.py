@@ -530,38 +530,25 @@ def add_package():
     return 'You are not authorized to access this page.'
 
 # Route for managing hotels, buses, and packages
-@app.route('/manage_services', methods=['GET', 'POST'])
+# Add a new route to manage services
+@app.route('/manage_services')
 @login_required
 def manage_services():
     if isinstance(current_user, ServiceProvider):
-        # Fetch hotels, buses, and packages associated with the current service provider
+        # Fetch all services associated with the provider (hotels, buses, packages, rooms)
         hotels = Hotel.query.filter_by(ServiceProviderID=current_user.ServiceProviderID).all()
         buses = Bus.query.filter_by(ServiceProviderID=current_user.ServiceProviderID).all()
         packages = Package.query.filter_by(ServiceProviderID=current_user.ServiceProviderID).all()
+        rooms = Room.query.join(Hotel).filter(Hotel.ServiceProviderID == current_user.ServiceProviderID).all()
 
-        if request.method == 'POST':
-            # Process form data to delete selected services
-            service_type = request.form['service_type']
-            service_id = request.form['service_id']
-
-            # Determine the service type and delete the selected service
-            if service_type == 'hotel':
-                Hotel.query.filter_by(HotelID=service_id).delete()
-            elif service_type == 'bus':
-                Bus.query.filter_by(BusID=service_id).delete()
-            elif service_type == 'package':
-                Package.query.filter_by(PackageID=service_id).delete()
-
-            # Commit changes to the database
-            db.session.commit()
-
-            flash(f'{service_type.capitalize()} deleted successfully!', 'success')
-
-            # Redirect back to the manage_services page
-            return redirect(url_for('manage_services'))
-
-        # Provide hotels, buses, and packages to the template
-        return render_template('manage_services.html', username=current_user.Username, hotels=hotels, buses=buses, packages=packages)
+        return render_template(
+            'manage_services.html',
+            username=current_user.Username,
+            hotels=hotels,
+            buses=buses,
+            packages=packages,
+            rooms=rooms
+        )
 
     return 'You are not authorized to access this page.'
 
@@ -637,6 +624,25 @@ def update_package(package_id):
             return redirect(url_for('provider_home'))
 
         return render_template('update_package.html', username=current_user.Username, package=package)
+
+    return 'You are not authorized to access this page.'
+
+@app.route('/delete_bus/<int:bus_id>')
+@login_required
+def delete_bus(bus_id):
+    if isinstance(current_user, ServiceProvider):
+        # Find the bus in the database
+        bus = Bus.query.get(bus_id)
+
+        if bus:
+            # Perform the deletion logic (e.g., db.session.delete(bus))
+            # Commit the changes to the database
+            # Redirect to the manage services page or home page
+            flash('Bus deleted successfully!', 'success')
+            return redirect(url_for('manage_services'))
+
+        flash('Bus not found!', 'error')
+        return redirect(url_for('manage_services'))
 
     return 'You are not authorized to access this page.'
 

@@ -1,60 +1,56 @@
-<!-- manage_services.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Services</title>
-</head>
-<body>
-    <h2>Manage Services</h2>
+<!-- templates/manage_services.html -->
+{% extends 'base.html' %}
 
-    <!-- Display hotels -->
-    <h3>Hotels:</h3>
+{% block title %}Manage Services{% endblock %}
+
+{% block content %}
+    <h1>Manage Services</h1>
+
+    <h2>Hotels</h2>
     <ul>
         {% for hotel in hotels %}
             <li>
-                {{ hotel.HotelName }} - {{ hotel.Location }}
-                <form method="POST" action="{{ url_for('manage_services') }}">
-                    <input type="hidden" name="service_type" value="hotel">
-                    <input type="hidden" name="service_id" value="{{ hotel.HotelID }}">
-                    <button type="submit" onclick="return confirm('Are you sure you want to delete this hotel?')">Delete</button>
-                </form>
+                Hotel: {{ hotel.HotelName }}
+                <!-- Add links to update or delete each hotel -->
+                <a href="{{ url_for('update_hotel', hotel_id=hotel.HotelID) }}">Update</a>
+                <a href="{{ url_for('delete_hotel', hotel_id=hotel.HotelID) }}">Delete</a>
             </li>
         {% endfor %}
     </ul>
 
-    <!-- Display buses -->
-    <h3>Buses:</h3>
+    <h2>Buses</h2>
     <ul>
         {% for bus in buses %}
             <li>
-                {{ bus.BusName }} - {{ bus.DepartureCity }} to {{ bus.ArrivalCity }}
-                <form method="POST" action="{{ url_for('manage_services') }}">
-                    <input type="hidden" name="service_type" value="bus">
-                    <input type="hidden" name="service_id" value="{{ bus.BusID }}">
-                    <button type="submit" onclick="return confirm('Are you sure you want to delete this bus?')">Delete</button>
-                </form>
+                Bus: {{ bus.BusName }}
+                <!-- Add links to update or delete each bus -->
+                <a href="{{ url_for('update_bus', bus_id=bus.BusID) }}">Update</a>
+                <a href="{{ url_for('delete_bus', bus_id=bus.BusID) }}">Delete</a>
             </li>
         {% endfor %}
     </ul>
 
-    <!-- Display packages -->
-    <h3>Packages:</h3>
+    <h2>Packages</h2>
     <ul>
         {% for package in packages %}
             <li>
-                {{ package.PackageName }} - {{ package.Description }}
-                <form method="POST" action="{{ url_for('manage_services') }}">
-                    <input type="hidden" name="service_type" value="package">
-                    <input type="hidden" name="service_id" value="{{ package.PackageID }}">
-                    <button type="submit" onclick="return confirm('Are you sure you want to delete this package?')">Delete</button>
-                </form>
+                Package: {{ package.PackageName }}
+                <!-- Add links to update or delete each package -->
+                <a href="{{ url_for('update_package', package_id=package.PackageID) }}">Update</a>
+                <a href="{{ url_for('delete_package', package_id=package.PackageID) }}">Delete</a>
             </li>
         {% endfor %}
     </ul>
 
-    <!-- Add a link to go back to the provider's home page -->
-    <a href="{{ url_for('provider_home') }}">Back to Provider Home</a>
-</body>
-</html>
+    <h2>Rooms</h2>
+    <ul>
+        {% for room in rooms %}
+            <li>
+                Room: {{ room.RoomNumber }}
+                <!-- Add links to update or delete each room -->
+                <a href="{{ url_for('update_room', room_id=room.RoomID) }}">Update</a>
+                <a href="{{ url_for('delete_room', room_id=room.RoomID) }}">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
