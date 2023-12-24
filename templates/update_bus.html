@@ -17,10 +17,10 @@
         <input type="text" name="arrival_city" value="{{ bus.ArrivalCity }}" required><br>
 
         <label for="departure_time">Departure Time:</label>
-        <input type="datetime-local" name="departure_time" value="{{ bus.DepartureTime|datetimeformat }}" required><br>
+        <input type="datetime-local" name="departure_time" value="{{ bus.DepartureTime }}" required><br>
 
         <label for="arrival_time">Arrival Time:</label>
-        <input type="datetime-local" name="arrival_time" value="{{ bus.ArrivalTime|datetimeformat }}" required><br>
+        <input type="datetime-local" name="arrival_time" value="{{ bus.ArrivalTime }}" required><br>
 
         <label for="price">Price:</label>
         <input type="number" name="price" step="0.01" value="{{ bus.Price }}" required><br>

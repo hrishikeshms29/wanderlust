@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, LoginManager, login_user, login_required, logout_user, current_user
 from datetime import datetime
 
-
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:hrishi2003@localhost:3306/wanderlust'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -637,6 +636,9 @@ def delete_bus(bus_id):
         if bus:
             # Perform the deletion logic (e.g., db.session.delete(bus))
             # Commit the changes to the database
+            db.session.delete(bus)
+            db.session.commit()
+
             # Redirect to the manage services page or home page
             flash('Bus deleted successfully!', 'success')
             return redirect(url_for('manage_services'))
@@ -657,6 +659,9 @@ def delete_package(package_id):
             # Perform the deletion logic (e.g., db.session.delete(package))
             # Commit the changes to the database
             # Redirect to the manage services page or home page
+            db.session.delete(package)
+            db.session.commit()
+
             flash('Package deleted successfully!', 'success')
             return redirect(url_for('manage_services'))
 
@@ -664,6 +669,76 @@ def delete_package(package_id):
         return redirect(url_for('manage_services'))
 
     return 'You are not authorized to access this page.'
+# Route for deleting a hotel
+@app.route('/delete_hotel/<int:hotel_id>')
+@login_required
+def delete_hotel(hotel_id):
+    if isinstance(current_user, ServiceProvider):
+        # Find the hotel in the database
+        hotel = Hotel.query.get(hotel_id)
+
+        if hotel:
+            # Perform the deletion logic (e.g., db.session.delete(hotel))
+            # Commit the changes to the database
+            db.session.delete(hotel)
+            db.session.commit()
+
+            # Redirect to the manage services page or home page
+            flash('Hotel deleted successfully!', 'success')
+            return redirect(url_for('manage_services'))
+
+        flash('Hotel not found!', 'error')
+        return redirect(url_for('manage_services'))
+
+    return 'You are not authorized to access this page.'
+
+# Route for deleting a room
+@app.route('/delete_room/<int:room_id>')
+@login_required
+def delete_room(room_id):
+    if isinstance(current_user, ServiceProvider):
+        # Find the room in the database
+        room = Room.query.get(room_id)
+
+        if room:
+            # Perform the deletion logic (e.g., db.session.delete(room))
+            # Commit the changes to the database
+            # Redirect to the manage services page or home page
+            db.session.delete(room)
+            db.session.commit()
+
+            flash('Room deleted successfully!', 'success')
+            return redirect(url_for('manage_services'))
+
+        flash('Room not found!', 'error')
+        return redirect(url_for('manage_services'))
+
+    return 'You are not authorized to access this page.'
+# Add a new route to update an existing room
+@app.route('/update_room/<int:room_id>', methods=['GET', 'POST'])
+@login_required
+def update_room(room_id):
+    if isinstance(current_user, ServiceProvider):
+        room = Room.query.get(room_id)
+
+        if request.method == 'POST':
+            # Process form data
+            room.RoomNumber = int(request.form['room_number'])
+            room.Capacity = int(request.form['capacity'])
+            room.PricePerNight = float(request.form['price_per_night'])
+            room.Image = request.form['image']
+            room.RoomType = request.form['room_type']
+
+            # Update the room in the database
+            db.session.commit()
+
+            flash('Room updated successfully!')
+            return redirect(url_for('provider_home'))
+
+        return render_template('update_room.html', username=current_user.Username, room=room)
+
+    return 'You are not authorized to access this page.'
+
 
 if __name__ == '__main__':
     with app.app_context():
