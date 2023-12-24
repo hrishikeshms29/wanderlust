@@ -110,6 +110,7 @@ class Hotel(db.Model):
     HotelName = db.Column(db.String(255), nullable=False)
     Location = db.Column(db.String(255), nullable=False)
     Description = db.Column(db.Text, nullable=False)
+    Image = db.Column(db.String(255))
 
 class Room(db.Model):
     __tablename__ = 'rooms'
@@ -121,6 +122,7 @@ class Room(db.Model):
     Capacity = db.Column(db.Integer, nullable=False)
     PricePerNight = db.Column(db.DECIMAL(10,2), nullable=False)
     Image = db.Column(db.String(255))
+    RoomType = db.Column(db.String(255), nullable=False)
 
 class Bus(db.Model):
     __tablename__ = 'buses'
@@ -414,6 +416,7 @@ def add_room():
             capacity = request.form['capacity']
             price_per_night = request.form['price_per_night']
             image = request.form['image']
+            room_type = request.form['room_type']
 
             # Create a new room instance
             new_room = Room(
@@ -421,7 +424,8 @@ def add_room():
                 RoomNumber=room_number,
                 Capacity=capacity,
                 PricePerNight=price_per_night,
-                Image=image
+                Image=image,
+                RoomType=room_type
             )
 
             # Add the new room to the database
