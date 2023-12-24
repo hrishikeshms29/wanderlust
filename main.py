@@ -4,7 +4,7 @@ from flask_login import UserMixin, LoginManager, login_user, login_required, log
 from datetime import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:hrishi2003@localhost:3306/wanderlust'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:disha%401907@localhost:3306/tourism'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'your_secret_key'  # Add a secret key for Flask-Login
 db = SQLAlchemy(app)
@@ -359,7 +359,38 @@ def all_packages():
     return 'You are not authorized to access this page.'
 
 
+#all_hotels route
+@app.route('/all_hotels')
+@login_required
+def all_hotels():
+    if isinstance(current_user, User):
+        # Fetch all hotels from the database
+        all_hotels = Hotel.query.all()
 
+        # Pass the hotels to the template
+        return render_template('all_hotels.html', username=current_user.Username, hotels=all_hotels)
+
+    return 'You are not authorized to access this page.'
+
+
+# Route for fetching all rooms of a particular hotel
+@app.route('/all_rooms/<int:hotel_id>')
+@login_required
+def all_rooms(hotel_id):
+    if isinstance(current_user, User):
+        # Fetch the selected hotel
+        selected_hotel = Hotel.query.get(hotel_id)
+
+        if not selected_hotel:
+            abort(404)  # Hotel not found
+
+        # Fetch all rooms of the selected hotel from the database
+        rooms = Room.query.filter_by(HotelID=hotel_id).all()
+
+        # Pass the selected hotel and its rooms to the template
+        return render_template('all_rooms.html', username=current_user.Username, hotel=selected_hotel, rooms=rooms)
+
+    return 'You are not authorized to access this page.'
 
 
 

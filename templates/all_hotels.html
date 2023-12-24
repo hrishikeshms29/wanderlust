@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Hotels</title>
+</head>
+<body>
+    <h1>Welcome, {{ username }}!</h1>
+    <h2>All Hotels</h2>
+
+    <ul>
+        {% for hotel in hotels %}
+            <li>{{ hotel.HotelName }} - {{ hotel.Location }} - {{ hotel.Description }}
+                <a href="{{ url_for('all_rooms', hotel_id=hotel.HotelID) }}">All Rooms</a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{{ url_for('user_home') }}">Back to User Home</a>
+
+</body>
+</html>
