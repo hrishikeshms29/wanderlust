@@ -31,6 +31,8 @@
                         <td>{{ bus.ArrivalTime }}</td>
                         <td>{{ bus.Price }}</td>
                         <td>{{ bus.Image }}</td>
+                        <td><img src="{{ url_for('static', filename='images/' + bus.Image) }}" alt="{{ bus.BusName }} Image" width="50"></td>
+                        <td><a href="{{ url_for('book', service_type='bus', service_id=bus.BusID) }}" class="btn btn-primary">Book</a></td>
                     </tr>
                 {% endfor %}
             </tbody>

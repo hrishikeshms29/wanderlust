@@ -8,7 +8,9 @@
 <body>
     <h1>Welcome, {{ username }}!</h1>
     <h2>All Hotels</h2>
-
+     <a href="/logout">Logout</a>
+    <a href="{{ url_for('all_buses') }}">All Buses</a>
+    <a href="{{ url_for('all_hotels') }}">All Hotels</a>
     <ul>
         {% for hotel in hotels %}
             <li>{{ hotel.HotelName }} - {{ hotel.Location }} - {{ hotel.Description }}

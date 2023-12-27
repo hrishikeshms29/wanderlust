@@ -4,13 +4,15 @@
 
 {% block content %}
     <h1>Welcome, {{ username }}!</h1>
-    <a href="/logout">Logout</a>
+     <a href="/logout">Logout</a>
     <a href="{{ url_for('all_buses') }}">All Buses</a>
+    <a href="{{ url_for('all_hotels') }}">All Hotels</a>
 
     <h2>All Packages:</h2>
     <ul>
         {% for package in packages %}
             <li>{{ package.PackageName }} - {{ package.Description }} - ${{ package.Price }}</li>
+             <a href="{{ url_for('book', service_type='package', service_id=package.PackageID) }}" class="btn btn-primary">Book</a>
         {% endfor %}
     </ul>
 {%endblock%}

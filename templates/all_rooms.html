@@ -8,12 +8,19 @@
 <body>
     <h1>Welcome, {{ username }}!</h1>
     <h2>All Rooms of {{ hotel.HotelName }}</h2>
-
+     <a href="/logout">Logout</a>
+    <a href="{{ url_for('all_buses') }}">All Buses</a>
+    <a href="{{ url_for('all_hotels') }}">All Hotels</a>
+    <a href="{{ url_for('all_packages') }}">All Packages</a>
     <ul>
-        {% for room in rooms %}
-            <li>{{ room.RoomNumber }} - {{ room.RoomType }} - Price: ${{ room.PricePerNight }}</li>
-        {% endfor %}
-    </ul>
+    {% for room in rooms %}
+        <li>
+            {{ room.RoomNumber }} - {{ room.RoomType }} - Price: ${{ room.PricePerNight }}
+            <a href="{{ url_for('book', service_type='room', service_id=room.RoomID) }}" class="btn btn-primary">Book</a>
+        </li>
+    {% endfor %}
+</ul>
+
 
     <a href="{{ url_for('user_home') }}">Back to User Home</a>
 </body>

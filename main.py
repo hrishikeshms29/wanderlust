@@ -4,9 +4,9 @@ from flask_login import UserMixin, LoginManager, login_user, login_required, log
 from datetime import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:disha%401907@localhost:3306/tourism'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:hrishi2003@localhost:3306/wanderlust'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'your_secret_key'  # Add a secret key for Flask-Login
+app.config['SECRET_KEY'] = 'your_secret_key'
 db = SQLAlchemy(app)
 
 login_manager = LoginManager(app)
@@ -17,25 +17,18 @@ login_manager.login_view = 'login'
 
 @login_manager.user_loader
 def load_user(user_id):
-    # If not, check if the ID belongs to a ServiceProvider
     provider = ServiceProvider.query.get(int(user_id))
     print(type(provider))
     if provider:
         print(provider)
         return provider
     else:
-        # Check if the ID belongs to a User
         user = User.query.get(int(user_id))
         print(user)
         if user:
             return user
-    # If neither User nor ServiceProvider is found, return None
     return None
-#
-# # Service Provider loader
-# @login_manager.user_loader
-# def load_provider(provider_id):
-#     return ServiceProvider.query.get(int(provider_id))
+
 
 #models
 
@@ -46,6 +39,7 @@ class User(db.Model, UserMixin):
     Username = db.Column(db.String(255), nullable=False, unique=True)
     Password = db.Column(db.String(255), nullable=False)
     Email = db.Column(db.String(255), nullable=False, unique=True)
+
     def get_id(self):
         return str(self.UserID)
 
@@ -76,19 +70,25 @@ class ServiceProvider(db.Model):
     BankDetails = db.Column(db.String(255))
     UPIScanImage = db.Column(db.String(255))
     Password = db.Column(db.String(255), nullable=False)
+
     def get_id(self):
         return str(self.ServiceProviderID)
+
     @property
     def is_active(self):
         return True  # You can customize this based on your logic
+
     @property
     def is_authenticated(self):
         return True  # You can customize this based on your logic
+
     @property
     def is_anonymous(self):
         return False
+
     def __repr__(self):
         return f"<ServiceProvider {self.Username}>"
+
 
 class Package(db.Model):
     __tablename__ = 'packages'
@@ -101,6 +101,7 @@ class Package(db.Model):
     Duration = db.Column(db.Integer, nullable=False)
     Image = db.Column(db.String(255))
 
+
 class Hotel(db.Model):
     __tablename__ = 'hotels'
 
@@ -111,10 +112,12 @@ class Hotel(db.Model):
     Description = db.Column(db.Text, nullable=False)
     Image = db.Column(db.String(255))
 
+
 class Room(db.Model):
     __tablename__ = 'rooms'
 
     RoomID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    ServiceProviderID = db.Column(db.Integer, db.ForeignKey('serviceproviders.ServiceProviderID'))
     HotelID = db.Column(db.Integer, db.ForeignKey('hotels.HotelID'), nullable=False)
     RoomNumber = db.Column(db.Integer, nullable=False)
     IsAvailable = db.Column(db.Boolean, nullable=False, default=True)
@@ -122,6 +125,7 @@ class Room(db.Model):
     PricePerNight = db.Column(db.DECIMAL(10,2), nullable=False)
     Image = db.Column(db.String(255))
     RoomType = db.Column(db.String(255), nullable=False)
+
 
 class Bus(db.Model):
     __tablename__ = 'buses'
@@ -135,6 +139,8 @@ class Bus(db.Model):
     ArrivalTime = db.Column(db.DateTime, nullable=False)
     Price = db.Column(db.DECIMAL(10,2), nullable=False)
     Image = db.Column(db.String(255))
+    IsAvailable = db.Column(db.Boolean, nullable=False, default=True)
+
 
 class Booking(db.Model):
     __tablename__ = 'bookings'
@@ -149,6 +155,7 @@ class Booking(db.Model):
     BusID = db.Column(db.Integer, db.ForeignKey('buses.BusID'))
     PackageID = db.Column(db.Integer, db.ForeignKey('packages.PackageID'))
 
+
 class Review(db.Model):
     __tablename__ = 'reviews'
 
@@ -162,23 +169,12 @@ class Review(db.Model):
     Comment = db.Column(db.Text)
     Date = db.Column(db.DateTime, nullable=False)
 
-class Transaction(db.Model):
-    __tablename__ = 'transactions'
-
-    TransactionID = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    UserID = db.Column(db.Integer, db.ForeignKey('users.UserID'), nullable=False)
-    BookingID = db.Column(db.Integer, db.ForeignKey('bookings.BookingID'))
-    TransactionDate = db.Column(db.DateTime, nullable=False)
-    TransactionAmount = db.Column(db.DECIMAL(10,2), nullable=False)
-    ServiceProviderID = db.Column(db.Integer, db.ForeignKey('serviceproviders.ServiceProviderID'))
-    TransactionStatus = db.Column(db.String(255), nullable=False)
 
 class BillingDetail(db.Model):
     __tablename__ = 'billingdetails'
 
     BillingID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     UserID = db.Column(db.Integer, db.ForeignKey('users.UserID'), nullable=False)
-    TransactionID = db.Column(db.Integer, db.ForeignKey('transactions.TransactionID'))
     BillingDate = db.Column(db.DateTime, nullable=False)
     TotalAmount = db.Column(db.DECIMAL(10,2), nullable=False)
     TaxAmount = db.Column(db.DECIMAL(10,2), nullable=False)
@@ -340,10 +336,11 @@ def home():
 def all_buses():
     if isinstance(current_user, User):
         # Fetch all buses from the database
-        all_buses = Bus.query.all()
+        #all_buses = Bus.query.all()
+        available_buses = Bus.query.filter_by(IsAvailable=True).all()
 
         # Pass the buses to the template
-        return render_template('all_buses.html', username=current_user.Username, buses=all_buses)
+        return render_template('all_buses.html', username=current_user.Username, buses=available_buses, service_type='bus')
 
     return 'You are not authorized to access this page.'
 
@@ -378,26 +375,98 @@ def all_hotels():
 @login_required
 def all_rooms(hotel_id):
     if isinstance(current_user, User):
-        # Fetch the selected hotel
         selected_hotel = Hotel.query.get(hotel_id)
 
         if not selected_hotel:
             abort(404)  # Hotel not found
 
-        # Fetch all rooms of the selected hotel from the database
-        rooms = Room.query.filter_by(HotelID=hotel_id).all()
+        #rooms = Room.query.filter_by(HotelID=hotel_id).all()
+        available_rooms = Room.query.filter_by(HotelID=hotel_id, IsAvailable=True).all()
 
         # Pass the selected hotel and its rooms to the template
-        return render_template('all_rooms.html', username=current_user.Username, hotel=selected_hotel, rooms=rooms)
+        return render_template('all_rooms.html', username=current_user.Username, hotel=selected_hotel, rooms=available_rooms)
 
     return 'You are not authorized to access this page.'
 
+# ... (previous imports)
+
+@app.route('/book/<string:service_type>/<int:service_id>', methods=['GET', 'POST'])
+@login_required
+def book(service_type, service_id):
+    if not isinstance(current_user, User):
+        return 'You are not authorized to access this page.'
+
+    service_types = {'bus': Bus, 'room': Room
+        , 'package': Package}
+
+    if service_type not in service_types:
+        abort(404)  # Invalid service type
+
+    service = service_types[service_type].query.get(service_id)
+    print(service_id)
+    if not service:
+        abort(404)  # Service not found
+
+    booking_date = datetime.now()
+    total_price = calculate_total_price(service, service_type)
+
+    # Apply fixed discount of 10%
+    discount_amount = 0.1 * float(total_price)
+    discounted_price = float(total_price) - discount_amount
+    tax_amount = 0.07 * float(discounted_price)
+    grand_total = float(discounted_price) + tax_amount
+
+    if request.method == 'POST':
+        try:
+            # Process the booking form data
+            new_booking = Booking(
+                UserID=current_user.UserID,
+                ServiceProviderID=service.ServiceProviderID,
+                BookingDate=booking_date,
+                TotalPrice=total_price,
+                BookingType=service_type,
+                RoomID=service_id if service_type == 'room' else None,
+                BusID=service_id if service_type == 'bus' else None,
+                PackageID=service_id if service_type == 'package' else None
+            )
+
+            db.session.add(new_booking)
+            db.session.commit()
+
+            new_billing = BillingDetail(
+                UserID=current_user.UserID,
+                BillingDate=booking_date,
+                TotalAmount=total_price,
+                DiscountAmount=discount_amount,
+                TaxAmount=tax_amount,
+                GrandTotal=grand_total
+            )
+
+            db.session.add(new_billing)
+            db.session.commit()
+
+            new_booking.BillingID = new_billing.BillingID
+            db.session.commit()
+
+            flash('Booking and Billing successful!')
+            return redirect(url_for('user_home'))
+
+        except Exception as e:
+            db.session.rollback()  # Rollback changes in case of an exception
+            flash(f'Error: {str(e)}', 'error')
+            print(f"Error adding booking and billing: {str(e)}")
+
+    return render_template('book.html', username=current_user.Username, service=service, service_type=service_type, total_price=total_price, discount_amount=discount_amount, discounted_price=discounted_price, tax_percent=7, tax_amount=tax_amount, grand_total=grand_total)
+
+# ... (previous code)
+
+def calculate_total_price(service, service_type):
+    if service_type == 'room':
+        return float(service.PricePerNight)
+    else:
+        return float(service.Price)
 
 
-
-#provider funct
-# Route for adding a new hotel
-# Add a new hotel route
 @app.route('/add_hotel', methods=['GET', 'POST'])
 @login_required
 def add_hotel():
@@ -450,6 +519,7 @@ def add_room():
 
             # Create a new room instance
             new_room = Room(
+                ServiceProviderID=current_user.ServiceProviderID,
                 HotelID=hotel_id,
                 RoomNumber=room_number,
                 Capacity=capacity,

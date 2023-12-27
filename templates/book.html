@@ -1,0 +1,40 @@
+<!-- book.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Service</title>
+</head>
+<body>
+    <h2>Book Service</h2>
+    <p>Service Type: {{ service_type }}</p>
+
+    <p>Service Name: {{
+        service.RoomType if service_type == 'room' else
+        service.BusName if service_type == 'bus' else
+        service.PackageName if service_type == 'package' else
+        'Unknown Service Type'
+    }}</p>
+
+    <p>Original Price: ${{
+        service.PricePerNight if service_type == 'room' else
+        service.Price if service_type in ['bus', 'package'] else 'N/A'
+    }}</p>
+
+    <p>Total Price: ${{ total_price }}</p>
+    <p>Discount Amount: ${{ discount_amount }}</p>
+    <p>Discounted Price: ${{ discounted_price }}</p>
+    <p>Tax Percent: {{ tax_percent }}%</p>
+    <p>Tax Amount: ${{ tax_amount }}</p>
+    <p>Grand Total: ${{ grand_total }}</p>
+
+    <form method="post" action="">
+    <!-- Add additional form fields as needed -->
+    <input type="submit" value="Book">
+</form>
+
+</body>
+</html>
