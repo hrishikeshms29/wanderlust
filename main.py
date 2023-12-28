@@ -714,6 +714,7 @@ def update_bus(bus_id):
             bus.DepartureTime = datetime.strptime(request.form['departure_time'], '%Y-%m-%dT%H:%M')
             bus.ArrivalTime = datetime.strptime(request.form['arrival_time'], '%Y-%m-%dT%H:%M')
             bus.Price = float(request.form['price'])
+            bus.IsAvailable = bool(request.form.get('is_available'))
 
             # Update the bus in the database
             db.session.commit()
@@ -851,6 +852,7 @@ def update_room(room_id):
             room.PricePerNight = float(request.form['price_per_night'])
             room.Image = request.form['image']
             room.RoomType = request.form['room_type']
+            room.IsAvailable = bool(request.form.get('is_available'))
 
             # Update the room in the database
             db.session.commit()

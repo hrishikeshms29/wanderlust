@@ -36,6 +36,12 @@
                     <input type="text" class="form-control" name="room_type" value="{{ room.RoomType }}" required>
                 </div>
 
+                <div class="form-group">
+                    <label for="is_available">Is Available:</label>
+                    <input type="checkbox" class="form-check-input" name="is_available" {% if room.IsAvailable %}checked{% endif %}>
+                </div>
+
+
                 <button type="submit" class="btn btn-primary">Update Room</button>
             </form>
         </div>
