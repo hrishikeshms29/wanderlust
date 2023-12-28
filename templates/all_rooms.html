@@ -10,7 +10,7 @@
         <a class="navbar-brand" href="{{ url_for('user_home') }}">Home</a>
     </nav>
 
-    <div class="container mt-4">
+    <div class="container mt-4" style="background-color: #e3d5c6; color: ##573718;">
         <h1 class="display-4 mb-4">Explore Rooms at {{ hotel.HotelName }}</h1>
 
         <!-- Sort Options -->
@@ -30,13 +30,19 @@
             {% for room in rooms %}
                 <div class="col-md-4 mb-4">
                     <div class="card">
-                        <!-- Add an image if available -->
-                        <!-- <img src="{{ url_for('static', filename='images/' + room.Image) }}" class="card-img-top" alt="{{ room.RoomType }} Image"> -->
-                        <div class="card-body">
-                            <h5 class="card-title">{{ room.RoomType }}</h5>
-                            <p class="card-text"><strong>Room Number:</strong> {{ room.RoomNumber }}</p>
-                            <p class="card-text"><strong>Price per Night:</strong> ${{ room.PricePerNight }}</p>
-                            <a href="{{ url_for('book', service_type='room', service_id=room.RoomID) }}" class="btn btn-primary">Book Now</a>
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <!-- Add an image if available -->
+                                <!-- <img src="{{ url_for('static', filename='images/' + room.Image) }}" class="card-img" alt="{{ room.RoomType }} Image"> -->
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ room.RoomType }}</h5>
+                                    <p class="card-text"><strong>Room Number:</strong> {{ room.RoomNumber }}</p>
+                                    <p class="card-text"><strong>Price per Night:</strong> ${{ room.PricePerNight }}</p>
+                                    <a href="{{ url_for('book', service_type='room', service_id=room.RoomID) }}" class="btn btn-primary">Book Now</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

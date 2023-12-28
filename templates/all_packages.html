@@ -10,7 +10,7 @@
         <a class="navbar-brand" href="{{ url_for('user_home') }}">Home</a>
     </nav>
 
-    <div class="container mt-4">
+    <div class="container mt-4" style="background-color: #e3d5c6; color: ##573718;">
         <h1 class="display-4 mb-4">Discover Exclusive Travel Packages</h1>
 
         <!-- Sort Options -->
@@ -29,13 +29,19 @@
             {% for package in packages %}
                 <div class="col-md-4 mb-4">
                     <div class="card">
-                        <!-- Add an image if available -->
-                        <img src="{{ url_for('static', filename='images/' + (package.Image or 'default_image.jpg')) }}" class="card-img-top" alt="{{ package.PackageName }} Image">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ package.PackageName }}</h5>
-                            <p class="card-text">{{ package.Description }}</p>
-                            <p class="card-text"><strong>Price:</strong> ${{ package.Price }}</p>
-                            <a href="{{ url_for('book', service_type='package', service_id=package.PackageID) }}" class="btn btn-primary">Embark on this Journey</a>
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <!-- Add an image if available -->
+                                <img src="{{ url_for('static', filename='images/' + (package.Image or 'default_image.jpg')) }}" class="card-img" alt="{{ package.PackageName }} Image">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ package.PackageName }}</h5>
+                                    <p class="card-text">{{ package.Description }}</p>
+                                    <p class="card-text"><strong>Price:</strong> ${{ package.Price }}</p>
+                                    <a href="{{ url_for('book', service_type='package', service_id=package.PackageID) }}" class="btn btn-primary">Embark on this Journey</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

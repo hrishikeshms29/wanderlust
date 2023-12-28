@@ -7,7 +7,7 @@
 {% block content %}
     <!-- Navbar with Logout Button -->
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #EBE8E7; /* Pale Yellow */">
-        <a class="navbar-brand" href="#"><img src="file:///E:/wnder/logo.jpg" alt="Your Logo" style="max-height: 40px;"></a>
+        <span class="navbar-brand">Welcome, {{ username }}!</span>
 
         <!-- Navbar Links -->
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -25,10 +25,9 @@
             </ul>
         </div>
     </nav>
-
     <!-- Main Content -->
-    <div class="container mt-5">
-        <div class="jumbotron animated fadeIn">
+    <div class="container mt-5" style="background-color: #d1f9d1; /* Lighter green background color */ color: #014d1e;">
+        <div class="jumbotron animated fadeIn" style="background-color: #d1f9d1; /* Lighter green background color */ color: #014d1e;">
             <h1 class="display-4">Greetings, Traveler!</h1>
             <p class="lead">Embark on your next journey with these exciting options:</p>
             <hr class="my-4">

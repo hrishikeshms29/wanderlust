@@ -10,7 +10,7 @@
         <a class="navbar-brand" href="{{ url_for('user_home') }}">Home</a>
     </nav>
 
-    <div class="container mt-4">
+    <div class="container mt-4" style="background-color: #e3d5c6; color: ##573718;">
         <h1 class="display-4 mb-4">All Buses</h1>
 
         <!-- Sort Options -->
@@ -35,15 +35,21 @@
                 <div class="col-md-4 mb-4" data-aos="fade-up">
                     <!-- Adding AOS (Animate on Scroll) for animation -->
                     <div class="card">
-                        <img src="{{ url_for('static', filename='images/' + bus.Image) }}" class="card-img-top" alt="{{ bus.BusName }} Image">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ bus.BusName }}</h5>
-                            <p class="card-text" data-sort="DepartureCity"><strong>From:</strong> {{ bus.DepartureCity }}</p>
-                            <p class="card-text" data-sort="ArrivalCity"><strong>To:</strong> {{ bus.ArrivalCity }}</p>
-                            <p class="card-text" data-sort="DepartureTime"><strong>Departure:</strong> {{ bus.DepartureTime }}</p>
-                            <p class="card-text" data-sort="ArrivalTime"><strong>Arrival:</strong> {{ bus.ArrivalTime }}</p>
-                            <p class="card-text" data-sort="Price"><strong>Price:</strong> {{ bus.Price }}</p>
-                            <a href="{{ url_for('book', service_type='bus', service_id=bus.BusID) }}" class="btn btn-primary">Book Now</a>
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <img src="{{ url_for('static', filename='images/' + bus.Image) }}" class="card-img" alt="{{ bus.BusName }} Image">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ bus.BusName }}</h5>
+                                    <p class="card-text" data-sort="DepartureCity"><strong>From:</strong> {{ bus.DepartureCity }}</p>
+                                    <p class="card-text" data-sort="ArrivalCity"><strong>To:</strong> {{ bus.ArrivalCity }}</p>
+                                    <p class="card-text" data-sort="DepartureTime"><strong>Departure:</strong> {{ bus.DepartureTime }}</p>
+                                    <p class="card-text" data-sort="ArrivalTime"><strong>Arrival:</strong> {{ bus.ArrivalTime }}</p>
+                                    <p class="card-text" data-sort="Price"><strong>Price:</strong> {{ bus.Price }}</p>
+                                    <a href="{{ url_for('book', service_type='bus', service_id=bus.BusID) }}" class="btn btn-primary">Book Now</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
