@@ -1,27 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Rooms</title>
-</head>
-<body>
-    <h1>Welcome, {{ username }}!</h1>
-    <h2>All Rooms of {{ hotel.HotelName }}</h2>
-     <a href="/logout">Logout</a>
-    <a href="{{ url_for('all_buses') }}">All Buses</a>
-    <a href="{{ url_for('all_hotels') }}">All Hotels</a>
-    <a href="{{ url_for('all_packages') }}">All Packages</a>
-    <ul>
-    {% for room in rooms %}
-        <li>
-            {{ room.RoomNumber }} - {{ room.RoomType }} - Price: ${{ room.PricePerNight }}
-            <a href="{{ url_for('book', service_type='room', service_id=room.RoomID) }}" class="btn btn-primary">Book</a>
-        </li>
-    {% endfor %}
-</ul>
+<!-- templates/all_rooms.html -->
 
+{% extends 'base.html' %}
 
-    <a href="{{ url_for('user_home') }}">Back to User Home</a>
+{% block title %}All Rooms{% endblock %}
+
+{% block content %}
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #EBE8E7;">
+        <a class="navbar-brand" href="{{ url_for('user_home') }}">Home</a>
+    </nav>
+
+    <div class="container mt-4">
+        <h1 class="display-4 mb-4">Explore Rooms at {{ hotel.HotelName }}</h1>
+
+        <!-- Sort Options -->
+        <div class="form-group mt-3">
+            <label for="sortSelect">Sort By:</label>
+            <select class="form-control" id="sortSelect">
+                <option value="RoomID">Room ID</option>
+                <option value="RoomType">Room Type</option>
+                <option value="PricePerNight">Price Per Night</option>
+                <!-- Add more options based on your needs -->
+                <!-- <option value="SomeOtherField">Some Other Field</option> -->
+            </select>
+        </div>
+
+        <!-- Room Cards -->
+        <div class="row">
+            {% for room in rooms %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <!-- Add an image if available -->
+                        <!-- <img src="{{ url_for('static', filename='images/' + room.Image) }}" class="card-img-top" alt="{{ room.RoomType }} Image"> -->
+                        <div class="card-body">
+                            <h5 class="card-title">{{ room.RoomType }}</h5>
+                            <p class="card-text"><strong>Room Number:</strong> {{ room.RoomNumber }}</p>
+                            <p class="card-text"><strong>Price per Night:</strong> ${{ room.PricePerNight }}</p>
+                            <a href="{{ url_for('book', service_type='room', service_id=room.RoomID) }}" class="btn btn-primary">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- JavaScript for Sorting -->
+        <script>
+            document.getElementById('sortSelect').addEventListener('change', function () {
+                const sortBy = this.value;
+                const roomsContainer = document.querySelector('.row');
+
+                const cardsArray = Array.from(roomsContainer.children);
+
+                cardsArray.sort((a, b) => {
+                    const aValue = a.querySelector(`[data-sort=${sortBy}]`).innerText;
+                    const bValue = b.querySelector(`[data-sort=${sortBy}]`).innerText;
+
+                    return aValue.localeCompare(bValue);
+                });
+
+                roomsContainer.innerHTML = '';
+                cardsArray.forEach(card => roomsContainer.appendChild(card));
+            });
+        </script>
+
+        <!-- Back to User Home Link -->
+    </div>
 </body>
 </html>
+{% endblock %}

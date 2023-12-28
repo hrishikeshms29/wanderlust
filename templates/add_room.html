@@ -1,37 +1,51 @@
 <!-- add_room.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Room</title>
-</head>
-<body>
-    <h2>Add Room</h2>
-    <form method="POST" action="{{ url_for('add_room') }}">
-        <label for="hotel_id">Hotel:</label>
-        <select name="hotel_id" required>
-            {% for hotel in hotels %}
-                <option value="{{ hotel.HotelID }}">{{ hotel.HotelName }}</option>
-            {% endfor %}
-        </select><br>
+{% extends "base.html" %}
 
-        <label for="room_number">Room Number:</label>
-        <input type="number" name="room_number" required><br>
+{% block title %}Add Room{% endblock %}
 
-        <label for="capacity">Capacity:</label>
-        <input type="number" name="capacity" required><br>
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">New Room</h2>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="{{ url_for('add_room') }}">
+                <div class="form-group">
+                    <label for="hotel_id">Hotel:</label>
+                    <select class="form-control" name="hotel_id" required>
+                        {% for hotel in hotels %}
+                            <option value="{{ hotel.HotelID }}">{{ hotel.HotelName }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
-        <label for="price_per_night">Price per Night:</label>
-        <input type="number" name="price_per_night" step="0.01" required><br>
+                <div class="form-group">
+                    <label for="room_number">Number:</label>
+                    <input type="number" class="form-control" name="room_number" required>
+                </div>
 
-        <label for="image">Image:</label>
-        <input type="file" name="image" accept="image/*" required><br>
+                <div class="form-group">
+                    <label for="capacity">Capacity:</label>
+                    <input type="number" class="form-control" name="capacity" required>
+                </div>
 
-        <label for="room_type">Image:</label>
-        <input type="text" name="room_type" required><br>
+                <div class="form-group">
+                    <label for="price_per_night">Price:</label>
+                    <input type="number" class="form-control" name="price_per_night" step="0.01" required>
+                </div>
 
-        <button type="submit">Add Room</button>
-    </form>
-</body>
-</html>
+                <div class="form-group">
+                    <label for="image">Image:</label>
+                    <input type="file" class="form-control-file" name="image" accept="image/*" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="room_type">Type:</label>
+                    <input type="text" class="form-control" name="room_type" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

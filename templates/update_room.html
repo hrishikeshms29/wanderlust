@@ -4,24 +4,40 @@
 {% block title %}Update Room{% endblock %}
 
 {% block content %}
-    <h1>Update Room</h1>
-    <form method="POST" action="{{ url_for('update_room', room_id=room.RoomID) }}">
-        <!-- Form fields to update room details -->
-        <label for="room_number">Room Number:</label>
-        <input type="number" name="room_number" value="{{ room.RoomNumber }}" required><br>
+    <div class="card">
+        <div class="card-header bg-light text-dark">
+            <h1 class="card-title">Update Room</h1>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="{{ url_for('update_room', room_id=room.RoomID) }}">
+                <!-- Form fields to update room details -->
+                <div class="form-group">
+                    <label for="room_number">Room Number:</label>
+                    <input type="number" class="form-control" name="room_number" value="{{ room.RoomNumber }}" required>
+                </div>
 
-        <label for="capacity">Capacity:</label>
-        <input type="number" name="capacity" value="{{ room.Capacity }}" required><br>
+                <div class="form-group">
+                    <label for="capacity">Capacity:</label>
+                    <input type="number" class="form-control" name="capacity" value="{{ room.Capacity }}" required>
+                </div>
 
-        <label for="price_per_night">Price per Night:</label>
-        <input type="number" name="price_per_night" step="0.01" value="{{ room.PricePerNight }}" required><br>
+                <div class="form-group">
+                    <label for="price_per_night">Price per Night:</label>
+                    <input type="number" class="form-control" name="price_per_night" step="0.01" value="{{ room.PricePerNight }}" required>
+                </div>
 
-        <label for="image">Image:</label>
-        <input type="text" name="image" value="{{ room.Image }}" required><br>
+                <div class="form-group">
+                    <label for="image">Image:</label>
+                    <input type="text" class="form-control" name="image" value="{{ room.Image }}" required>
+                </div>
 
-        <label for="room_type">Room Type:</label>
-        <input type="text" name="room_type" value="{{ room.RoomType }}" required><br>
+                <div class="form-group">
+                    <label for="room_type">Room Type:</label>
+                    <input type="text" class="form-control" name="room_type" value="{{ room.RoomType }}" required>
+                </div>
 
-        <button type="submit">Update Room</button>
-    </form>
+                <button type="submit" class="btn btn-primary">Update Room</button>
+            </form>
+        </div>
+    </div>
 {% endblock %}

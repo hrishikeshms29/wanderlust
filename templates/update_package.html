@@ -4,21 +4,35 @@
 {% block title %}Update Package{% endblock %}
 
 {% block content %}
-    <h1>Update Package</h1>
-    <form method="POST" action="{{ url_for('update_package', package_id=package.PackageID) }}">
-        <!-- Form fields to update package details -->
-        <label for="package_name">Package Name:</label>
-        <input type="text" name="package_name" value="{{ package.PackageName }}" required><br>
+    <div class="card">
+        <div class="card-header bg-light text-dark">
+            <h1 class="card-title">Update Package</h1>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="{{ url_for('update_package', package_id=package.PackageID) }}">
+                <!-- Form fields to update package details -->
+                <div class="form-group">
+                    <label for="package_name">Package Name:</label>
+                    <input type="text" class="form-control" name="package_name" value="{{ package.PackageName }}" required>
+                </div>
 
-        <label for="description">Description:</label>
-        <textarea name="description" required>{{ package.Description }}</textarea><br>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea class="form-control" name="description" required>{{ package.Description }}</textarea>
+                </div>
 
-        <label for="price">Price:</label>
-        <input type="number" name="price" step="0.01" value="{{ package.Price }}" required><br>
+                <div class="form-group">
+                    <label for="price">Price:</label>
+                    <input type="number" class="form-control" name="price" step="0.01" value="{{ package.Price }}" required>
+                </div>
 
-        <label for="duration">Duration (in days):</label>
-        <input type="number" name="duration" value="{{ package.Duration }}" required><br>
+                <div class="form-group">
+                    <label for="duration">Duration (in days):</label>
+                    <input type="number" class="form-control" name="duration" value="{{ package.Duration }}" required>
+                </div>
 
-        <button type="submit">Update Package</button>
-    </form>
+                <button type="submit" class="btn btn-primary">Update Package</button>
+            </form>
+        </div>
+    </div>
 {% endblock %}

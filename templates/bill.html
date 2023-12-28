@@ -1,0 +1,61 @@
+<!-- bill.html -->
+{% extends 'base.html' %}
+
+{% block title %}Billing Statement{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="text-center mb-4">
+            <h1 class="display-4">WanderLust Travel Services</h1>
+            <p class="lead">Official Billing Statement</p>
+        </div>
+
+        <div class="card position-relative">
+            <div class="card-body">
+                <h5 class="card-title">Billing ID: {{ billing.BillingID }}</h5>
+                <p class="card-text"><strong>Billing Date:</strong> {{ billing.BillingDate.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+
+                <!-- Billing Details -->
+                <ul class="list-group mb-3">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <strong>Total Amount:</strong>
+                        <span>${{ billing.TotalAmount }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <strong>Discount Amount (10%):</strong>
+                        <span>${{ billing.DiscountAmount }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <strong>Tax Amount (7%):</strong>
+                        <span>${{ billing.TaxAmount }}</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <strong>Grand Total:</strong>
+                        <span>${{ billing.GrandTotal }}</span>
+                    </li>
+
+                </ul>
+
+                <!-- Additional Details and Thank You Note -->
+                <div class="mt-2">
+                    <p class="mb-1">Thank you for choosing WanderLust Travel Services. Your recent transaction details are as follows:</p>
+
+                    <!-- Additional breakdown items if needed -->
+
+                    <p class="mb-1">Your prompt payment is appreciated. For any inquiries, please contact our customer service.</p>
+                    <p>We wish you a pleasant journey!</p>
+                </div>
+
+                <!-- Company Disclaimer -->
+                <div class="text-muted small mt-2">
+                    <p>This bill is a valid statement of your recent transaction. Please review and keep it for your records.</p>
+                    <p>No refunds will be provided once the booking is confirmed. Your satisfaction is our priority.</p>
+                </div>
+
+                <!-- WanderLust Logo -->
+<!--                <img src="https://t4.ftcdn.net/jpg/04/58/26/41/360_F_458264157_87E4apBfzTKIH2xHFRipTrZgxEZEM8RU.jpg" alt="WanderLust Logo" class="position-absolute bottom-0 end-0 mb-4" style="max-height: 80px;">-->
+            </div>
+        </div>
+        <!-- WanderLust Logo -->
+    </div>
+{% endblock %}

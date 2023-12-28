@@ -1,40 +1,41 @@
 <!-- book.html -->
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Service</title>
-</head>
-<body>
-    <h2>Book Service</h2>
-    <p>Service Type: {{ service_type }}</p>
+{% extends 'base.html' %}
 
-    <p>Service Name: {{
-        service.RoomType if service_type == 'room' else
-        service.BusName if service_type == 'bus' else
-        service.PackageName if service_type == 'package' else
-        'Unknown Service Type'
-    }}</p>
+{% block title %}Confirm Your Reservation{% endblock %}
 
-    <p>Original Price: ${{
-        service.PricePerNight if service_type == 'room' else
-        service.Price if service_type in ['bus', 'package'] else 'N/A'
-    }}</p>
+{% block content %}
+    <div class="container mt-5">
+        <div class="card shadow p-4">
+            <h2 class="card-title mb-4">Reservation Summary</h2>
+            <p class="card-text"><strong>Experience Type:</strong> {{ service_type }}</p>
 
-    <p>Total Price: ${{ total_price }}</p>
-    <p>Discount Amount: ${{ discount_amount }}</p>
-    <p>Discounted Price: ${{ discounted_price }}</p>
-    <p>Tax Percent: {{ tax_percent }}%</p>
-    <p>Tax Amount: ${{ tax_amount }}</p>
-    <p>Grand Total: ${{ grand_total }}</p>
+            <p class="card-text"><strong>Selected Experience:</strong> {{
+                service.RoomType if service_type == 'room' else
+                service.BusName if service_type == 'bus' else
+                service.PackageName if service_type == 'package' else
+                'Unknown Experience Type'
+            }}</p>
 
-    <form method="post" action="">
-    <!-- Add additional form fields as needed -->
-    <input type="submit" value="Book">
-</form>
+            <p class="card-text"><strong>Original Price:</strong> ${{ service.PricePerNight if service_type == 'room' else service.Price if service_type in ['bus', 'package'] else 'N/A' }}</p>
 
-</body>
-</html>
+            <p class="card-text"><strong>Total Cost:</strong> ${{ total_price }}</p>
+            <p class="card-text"><strong>Discount:</strong> ${{ discount_amount }}</p>
+            <p class="card-text"><strong>Discounted Total:</strong> ${{ discounted_price }}</p>
+            <p class="card-text"><strong>Tax Rate:</strong> {{ tax_percent }}%</p>
+            <p class="card-text"><strong>Tax Amount:</strong> ${{ tax_amount }}</p>
+            <p class="card-text"><strong>Grand Total:</strong> ${{ grand_total }}</p>
+
+            <form method="post" action="">
+                <!-- Additional form fields can be added based on experience type -->
+                <input type="submit" value="Confirm Reservation" class="btn btn-primary mt-3">
+            </form>
+        </div>
+
+        <div class="card mt-4 shadow p-4">
+            <h5 class="card-title">Reservation Details</h5>
+            <p class="card-text small"><strong>Important:</strong> Once your reservation is confirmed, no refunds will be issued.</p>
+            <p class="card-text small">Thank you for choosing us for your experience. We look forward to serving you!</p>
+        </div>
+    </div>
+{% endblock %}

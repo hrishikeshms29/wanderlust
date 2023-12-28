@@ -1,0 +1,20 @@
+<!-- all_bookings.html -->
+{% extends 'base.html' %}
+
+{% block title %}All Bookings{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h2 class="mb-4">All Bookings</h2>
+        {% for booking in bookings %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Booking ID: {{ booking.BookingID }}</h5>
+                    <p class="card-text"><strong>Booking Date:</strong> {{ booking.BookingDate.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+                    <p class="card-text"><strong>Total Price:</strong> ${{ booking.TotalPrice }}</p>
+                    <!-- Add more details based on your model -->
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

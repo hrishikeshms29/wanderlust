@@ -1,41 +1,79 @@
 <!-- templates/all_buses.html -->
 
 {% extends 'base.html' %}
->
+
 {% block title %}All Buses{% endblock %}
 
 {% block content %}
-    <div class="container mt-5">
-        <h1 class="display-4">All Buses</h1>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Bus ID</th>
-                    <th scope="col">Bus Name</th>
-                    <th scope="col">Departure City</th>
-                    <th scope="col">Arrival City</th>
-                    <th scope="col">Departure Time</th>
-                    <th scope="col">Arrival Time</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Image</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for bus in buses %}
-                    <tr>
-                        <th scope="row">{{ bus.BusID }}</th>
-                        <td>{{ bus.BusName }}</td>
-                        <td>{{ bus.DepartureCity }}</td>
-                        <td>{{ bus.ArrivalCity }}</td>
-                        <td>{{ bus.DepartureTime }}</td>
-                        <td>{{ bus.ArrivalTime }}</td>
-                        <td>{{ bus.Price }}</td>
-                        <td>{{ bus.Image }}</td>
-                        <td><img src="{{ url_for('static', filename='images/' + bus.Image) }}" alt="{{ bus.BusName }} Image" width="50"></td>
-                        <td><a href="{{ url_for('book', service_type='bus', service_id=bus.BusID) }}" class="btn btn-primary">Book</a></td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #EBE8E7;">
+        <a class="navbar-brand" href="{{ url_for('user_home') }}">Home</a>
+    </nav>
+
+    <div class="container mt-4">
+        <h1 class="display-4 mb-4">All Buses</h1>
+
+        <!-- Sort Options -->
+        <div class="form-group mt-3">
+            <label for="sortSelect">Sort By:</label>
+            <select class="form-control" id="sortSelect">
+                <option value="BusID">Bus ID</option>
+                <option value="DepartureTime">Departure Time</option>
+                <option value="ArrivalTime">Arrival Time</option>
+                <option value="Price">Price</option>
+                <option value="DepartureCity">Departure City</option>
+                <option value="ArrivalCity">Arrival City</option>
+                <!-- Add more options based on your needs -->
+                <option value="BusName">Bus Name</option>
+                <option value="SomeOtherField">Some Other Field</option>
+            </select>
+        </div>
+
+        <!-- Bus Cards -->
+        <div class="row">
+            {% for bus in buses %}
+                <div class="col-md-4 mb-4" data-aos="fade-up">
+                    <!-- Adding AOS (Animate on Scroll) for animation -->
+                    <div class="card">
+                        <img src="{{ url_for('static', filename='images/' + bus.Image) }}" class="card-img-top" alt="{{ bus.BusName }} Image">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ bus.BusName }}</h5>
+                            <p class="card-text" data-sort="DepartureCity"><strong>From:</strong> {{ bus.DepartureCity }}</p>
+                            <p class="card-text" data-sort="ArrivalCity"><strong>To:</strong> {{ bus.ArrivalCity }}</p>
+                            <p class="card-text" data-sort="DepartureTime"><strong>Departure:</strong> {{ bus.DepartureTime }}</p>
+                            <p class="card-text" data-sort="ArrivalTime"><strong>Arrival:</strong> {{ bus.ArrivalTime }}</p>
+                            <p class="card-text" data-sort="Price"><strong>Price:</strong> {{ bus.Price }}</p>
+                            <a href="{{ url_for('book', service_type='bus', service_id=bus.BusID) }}" class="btn btn-primary">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
-{%endblock%}
+
+    <!-- JavaScript for Sorting and Animation -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init(); // Initialize AOS
+
+        document.getElementById('sortSelect').addEventListener('change', function () {
+            const sortBy = this.value;
+            const busesContainer = document.querySelector('.row');
+
+            // Get all cards and convert to array for sorting
+            const cardsArray = Array.from(busesContainer.children);
+
+            // Sort the array based on selected option
+            cardsArray.sort((a, b) => {
+                const aValue = a.querySelector(`[data-sort=${sortBy}]`).innerText;
+                const bValue = b.querySelector(`[data-sort=${sortBy}]`).innerText;
+
+                return aValue.localeCompare(bValue);
+            });
+
+            // Empty the container and append sorted cards
+            busesContainer.innerHTML = '';
+            cardsArray.forEach(card => busesContainer.appendChild(card));
+        });
+    </script>
+{% endblock %}

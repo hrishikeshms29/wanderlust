@@ -1,30 +1,42 @@
 <!-- add_packages.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Package</title>
-</head>
-<body>
-    <h2>Add Package</h2>
-    <form method="POST" action="{{ url_for('add_package') }}">
-        <label for="package_name">Package Name:</label>
-        <input type="text" name="package_name" required><br>
+{% extends "base.html" %}
 
-        <label for="description">Description:</label>
-        <textarea name="description" rows="4" required></textarea><br>
+{% block title %}Add Package{% endblock %}
 
-        <label for="price">Price:</label>
-        <input type="number" name="price" step="0.01" required><br>
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">New Package</h2>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="{{ url_for('add_package') }}">
+                <div class="form-group">
+                    <label for="package_name">Package Name:</label>
+                    <input type="text" class="form-control" name="package_name" required>
+                </div>
 
-        <label for="duration">Duration (in days):</label>
-        <input type="number" name="duration" required><br>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea class="form-control" name="description" rows="4" required></textarea>
+                </div>
 
-        <label for="image">Image:</label>
-        <input type="file" name="image" accept="image/*" required><br>
+                <div class="form-group">
+                    <label for="price">Price:</label>
+                    <input type="number" class="form-control" name="price" step="0.01" required>
+                </div>
 
-        <button type="submit">Add Package</button>
-    </form>
-</body>
-</html>
+                <div class="form-group">
+                    <label for="duration">Duration (in days):</label>
+                    <input type="number" class="form-control" name="duration" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="image">Image:</label>
+                    <input type="file" class="form-control-file" name="image" accept="image/*" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Add Package</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

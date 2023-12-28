@@ -1,37 +1,52 @@
 <!-- add_bus.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Bus</title>
-</head>
-<body>
-    <h2>Add Bus</h2>
-    <form method="POST" action="{{ url_for('add_bus') }}" enctype="multipart/form-data">
-        <label for="bus_name">Bus Name:</label>
-        <input type="text" name="bus_name" required><br>
+{% extends "base.html" %}
 
-        <label for="departure_city">Departure City:</label>
-        <input type="text" name="departure_city" required><br>
+{% block title %}Add Bus{% endblock %}
 
-        <label for="arrival_city">Arrival City:</label>
-        <input type="text" name="arrival_city" required><br>
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">New Bus</h2>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="{{ url_for('add_bus') }}" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="bus_name">Bus Name:</label>
+                    <input type="text" class="form-control" name="bus_name" required>
+                </div>
 
-        <label for="departure_time">Departure Time:</label>
-        <input type="datetime-local" name="departure_time" required><br>
+                <div class="form-group">
+                    <label for="departure_city">Departure City:</label>
+                    <input type="text" class="form-control" name="departure_city" required>
+                </div>
 
-        <label for="arrival_time">Arrival Time:</label>
-        <input type="datetime-local" name="arrival_time" required><br>
+                <div class="form-group">
+                    <label for="arrival_city">Arrival City:</label>
+                    <input type="text" class="form-control" name="arrival_city" required>
+                </div>
 
-        <label for="price">Price:</label>
-        <input type="number" name="price" step="0.01" required><br>
+                <div class="form-group">
+                    <label for="departure_time">Departure Time:</label>
+                    <input type="datetime-local" class="form-control" name="departure_time" required>
+                </div>
 
-        <!-- Add the image input field -->
-        <label for="image">Image:</label>
-        <input type="file" name="image" accept="image/*" required><br>
+                <div class="form-group">
+                    <label for="arrival_time">Arrival Time:</label>
+                    <input type="datetime-local" class="form-control" name="arrival_time" required>
+                </div>
 
-        <button type="submit">Add Bus</button>
-    </form>
-</body>
-</html>
+                <div class="form-group">
+                    <label for="price">Price:</label>
+                    <input type="number" class="form-control" name="price" step="0.01" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="image">Image:</label>
+                    <input type="file" class="form-control-file" name="image" accept="image/*" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Add Bus</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

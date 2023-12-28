@@ -4,53 +4,70 @@
 {% block title %}Manage Services{% endblock %}
 
 {% block content %}
-    <h1>Manage Services</h1>
+    <div class="card">
+        <div class="card-header" style="background-color: #8f5b34; color: #ffffff;">
+            <h1 class="card-title">Manage Services</h1>
+        </div>
+        <div class="card-body">
+            <h2 class="text-info">Hotels</h2>
+            <div class="list-group">
+                {% for hotel in hotels %}
+                    <div class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Hotel: {{ hotel.HotelName }}</span>
+                            <div>
+                                <a href="{{ url_for('update_hotel', hotel_id=hotel.HotelID) }}" class="btn btn-sm btn-info">Update</a>
+                                <a href="{{ url_for('delete_hotel', hotel_id=hotel.HotelID) }}" class="btn btn-sm btn-danger">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
 
-    <h2>Hotels</h2>
-    <ul>
-        {% for hotel in hotels %}
-            <li>
-                Hotel: {{ hotel.HotelName }}
-                <!-- Add links to update or delete each hotel -->
-                <a href="{{ url_for('update_hotel', hotel_id=hotel.HotelID) }}">Update</a>
-                <a href="{{ url_for('delete_hotel', hotel_id=hotel.HotelID) }}">Delete</a>
-            </li>
-        {% endfor %}
-    </ul>
+            <h2 class="text-info mt-4">Buses</h2>
+            <div class="list-group">
+                {% for bus in buses %}
+                    <div class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Bus: {{ bus.BusName }}</span>
+                            <div>
+                                <a href="{{ url_for('update_bus', bus_id=bus.BusID) }}" class="btn btn-sm btn-info">Update</a>
+                                <a href="{{ url_for('delete_bus', bus_id=bus.BusID) }}" class="btn btn-sm btn-danger">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
 
-    <h2>Buses</h2>
-    <ul>
-        {% for bus in buses %}
-            <li>
-                Bus: {{ bus.BusName }}
-                <!-- Add links to update or delete each bus -->
-                <a href="{{ url_for('update_bus', bus_id=bus.BusID) }}">Update</a>
-                <a href="{{ url_for('delete_bus', bus_id=bus.BusID) }}">Delete</a>
-            </li>
-        {% endfor %}
-    </ul>
+            <h2 class="text-info mt-4">Packages</h2>
+            <div class="list-group">
+                {% for package in packages %}
+                    <div class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Package: {{ package.PackageName }}</span>
+                            <div>
+                                <a href="{{ url_for('update_package', package_id=package.PackageID) }}" class="btn btn-sm btn-info">Update</a>
+                                <a href="{{ url_for('delete_package', package_id=package.PackageID) }}" class="btn btn-sm btn-danger">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
 
-    <h2>Packages</h2>
-    <ul>
-        {% for package in packages %}
-            <li>
-                Package: {{ package.PackageName }}
-                <!-- Add links to update or delete each package -->
-                <a href="{{ url_for('update_package', package_id=package.PackageID) }}">Update</a>
-                <a href="{{ url_for('delete_package', package_id=package.PackageID) }}">Delete</a>
-            </li>
-        {% endfor %}
-    </ul>
-
-    <h2>Rooms</h2>
-    <ul>
-        {% for room in rooms %}
-            <li>
-                Room: {{ room.RoomNumber }}
-                <!-- Add links to update or delete each room -->
-                <a href="{{ url_for('update_room', room_id=room.RoomID) }}">Update</a>
-                <a href="{{ url_for('delete_room', room_id=room.RoomID) }}">Delete</a>
-            </li>
-        {% endfor %}
-    </ul>
+            <h2 class="text-info mt-4">Rooms</h2>
+            <div class="list-group">
+                {% for room in rooms %}
+                    <div class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span>Room: {{ room.RoomNumber }}</span>
+                            <div>
+                                <a href="{{ url_for('update_room', room_id=room.RoomID) }}" class="btn btn-sm btn-info">Update</a>
+                                <a href="{{ url_for('delete_room', room_id=room.RoomID) }}" class="btn btn-sm btn-danger">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

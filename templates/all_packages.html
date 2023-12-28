@@ -1,18 +1,74 @@
+<!-- templates/all_packages.html -->
+
 {% extends 'base.html' %}
 
 {% block title %}All Packages{% endblock %}
 
 {% block content %}
-    <h1>Welcome, {{ username }}!</h1>
-     <a href="/logout">Logout</a>
-    <a href="{{ url_for('all_buses') }}">All Buses</a>
-    <a href="{{ url_for('all_hotels') }}">All Hotels</a>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #EBE8E7;">
+        <a class="navbar-brand" href="{{ url_for('user_home') }}">Home</a>
+    </nav>
 
-    <h2>All Packages:</h2>
-    <ul>
-        {% for package in packages %}
-            <li>{{ package.PackageName }} - {{ package.Description }} - ${{ package.Price }}</li>
-             <a href="{{ url_for('book', service_type='package', service_id=package.PackageID) }}" class="btn btn-primary">Book</a>
-        {% endfor %}
-    </ul>
-{%endblock%}
+    <div class="container mt-4">
+        <h1 class="display-4 mb-4">Discover Exclusive Travel Packages</h1>
+
+        <!-- Sort Options -->
+        <div class="form-group mt-3">
+            <label for="sortSelect">Sort By:</label>
+            <select class="form-control" id="sortSelect">
+                <option value="PackageName">Package Name</option>
+                <option value="Price">Price</option>
+                <!-- Add more options based on your needs -->
+                <option value="SomeOtherField">Some Other Field</option>
+            </select>
+        </div>
+
+        <!-- Package Cards -->
+        <div class="row">
+            {% for package in packages %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <!-- Add an image if available -->
+                        <!-- <img src="{{ url_for('static', filename='images/' + package.Image) }}" class="card-img-top" alt="{{ package.PackageName }} Image"> -->
+                        <div class="card-body">
+                            <h5 class="card-title">{{ package.PackageName }}</h5>
+                            <p class="card-text">{{ package.Description }}</p>
+                            <p class="card-text"><strong>Price:</strong> ${{ package.Price }}</p>
+                            <a href="{{ url_for('book', service_type='package', service_id=package.PackageID) }}" class="btn btn-primary">Embark on this Journey</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Descriptive Text -->
+        <p class="lead">Embark on unforgettable journeys with our meticulously crafted travel packages. Each package is a narrative waiting to unfold, promising unique and enriching experiences. Traverse through scenic landscapes, indulge in local cultures, and create memories that resonate a lifetime.</p>
+
+    </div>
+
+    <!-- JavaScript for Sorting -->
+    <script>
+        document.getElementById('sortSelect').addEventListener('change', function () {
+            const sortBy = this.value;
+            const packagesContainer = document.querySelector('.row');
+
+            // Get all cards and convert to array for sorting
+            const cardsArray = Array.from(packagesContainer.children);
+
+            // Sort the array based on selected option
+            cardsArray.sort((a, b) => {
+                const aValue = a.querySelector(`[data-sort=${sortBy}]`).innerText;
+                const bValue = b.querySelector(`[data-sort=${sortBy}]`).innerText;
+
+                return aValue.localeCompare(bValue);
+            });
+
+            // Empty the container and append sorted cards
+            packagesContainer.innerHTML = '';
+            cardsArray.forEach(card => packagesContainer.appendChild(card));
+        });
+    </script>
+</body>
+</html>
+{% endblock %}

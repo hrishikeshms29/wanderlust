@@ -4,18 +4,30 @@
 {% block title %}Update Hotel{% endblock %}
 
 {% block content %}
-    <h1>Update Hotel</h1>
-    <form method="POST" action="{{ url_for('update_hotel', hotel_id=hotel.HotelID) }}">
-        <!-- Form fields to update hotel details -->
-        <label for="hotel_name">Hotel Name:</label>
-        <input type="text" name="hotel_name" value="{{ hotel.HotelName }}" required><br>
+    <div class="card">
+        <div class="card-header bg-light text-dark">
+            <h1 class="card-title">Update Hotel</h1>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="{{ url_for('update_hotel', hotel_id=hotel.HotelID) }}">
+                <!-- Form fields to update hotel details -->
+                <div class="form-group">
+                    <label for="hotel_name">Hotel Name:</label>
+                    <input type="text" class="form-control" name="hotel_name" value="{{ hotel.HotelName }}" required>
+                </div>
 
-        <label for="location">Location:</label>
-        <input type="text" name="location" value="{{ hotel.Location }}" required><br>
+                <div class="form-group">
+                    <label for="location">Location:</label>
+                    <input type="text" class="form-control" name="location" value="{{ hotel.Location }}" required>
+                </div>
 
-        <label for="description">Description:</label>
-        <textarea name="description" required>{{ hotel.Description }}</textarea><br>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea class="form-control" name="description" required>{{ hotel.Description }}</textarea>
+                </div>
 
-        <button type="submit">Update Hotel</button>
-    </form>
+                <button type="submit" class="btn btn-primary">Update Hotel</button>
+            </form>
+        </div>
+    </div>
 {% endblock %}

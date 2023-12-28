@@ -1,0 +1,77 @@
+<!-- templates/base2.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}WanderLust{% endblock %}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- Add any additional styles or scripts specific to service provider pages -->
+    <style>
+        body {
+            background-color: #372C2E; /* OLD BURGUNDY */
+            color: #fff; /* WHITE Text */
+        }
+
+        .navbar {
+            background-color: #563727 !important; /* OLD BURGUNDY */
+        }
+
+        .navbar-dark .navbar-toggler-icon {
+            background-color: #fff; /* WHITE */
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: #fff !important; /* WHITE */
+        }
+
+        .navbar-dark .navbar-toggler {
+            border-color: #fff; /* WHITE */
+        }
+
+        .container {
+            background-color: #fff; /* WHITE */
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(205, 164, 52, 0.5); /* INDIAN YELLOW for depth effects */
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .btn-acajou {
+            background-color: #4C2111; /* ACAJOU for buttons */
+            color: #fff; /* WHITE Text */
+            border: 1px solid #ffcc00; /* INDIAN YELLOW for border */
+        }
+
+        .btn-acajou:hover {
+            background-color: #4C2111; /* ACAJOU for buttons */
+            color: #fff; /* WHITE Text */
+            border: 1px solid #fff; /* WHITE for hover border */
+        }
+
+        /* Add more styles as needed for service provider pages */
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">WanderLust</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <!-- Add any additional navigation links specific to service provider pages -->
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <!-- Add any additional scripts specific to service provider pages -->
+</body>
+</html>

@@ -5,9 +5,49 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #EBE8E7;
+            color: #413f3d;
+            font-family: 'Arial', sans-serif;
+            min-height: 100vh; /* Set the minimum height to 100% of the viewport height */
+            margin: 0; /* Remove default margin */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            background-color: #fffacd;
+        }
+/* Updated Container Styles */
+    .container {
+        background-color: #f2f1ef;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        border-radius: 8px;
+        flex: 1;
+        width: 100%; /* Set the width to 100% */
+        max-width: 100%; /* Ensure the container does not exceed the viewport width */
+    }
+
+
+    /* Updated Button Color */
+    .btn {
+        background-color: #8f5b34; /* Updated button color */
+        color: #f2f1ef;
+        border: none;
+    }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
     <title>{% block title %}Home{% endblock %}</title>
 </head>
 <body>
+    <!-- Content Container -->
     <div class="container mt-4">
         {% block content %}{% endblock %}
     </div>

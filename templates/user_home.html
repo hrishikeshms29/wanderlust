@@ -1,15 +1,96 @@
+<!-- templates/user_home.html -->
+
 {% extends 'base.html' %}
 
 {% block title %}User Home{% endblock %}
 
 {% block content %}
-    <div class="jumbotron">
-        <h1 class="display-4">Welcome, {{ username }}!</h1>
-        <p class="lead">Explore the options below:</p>
-        <hr class="my-4">
-        <a class="btn btn-primary btn-lg" href="/logout" role="button">Logout</a>
-        <a class="btn btn-success btn-lg" href="{{ url_for('all_buses') }}" role="button">All Buses</a>
-        <a class="btn btn-info btn-lg" href="{{ url_for('all_packages') }}" role="button">All Packages</a>
-        <a class="btn btn-info btn-lg" href="{{ url_for('all_hotels') }}" role="button">All Hotels</a>
+    <!-- Navbar with Logout Button -->
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #EBE8E7; /* Pale Yellow */">
+        <a class="navbar-brand" href="#"><img src="file:///E:/wnder/logo.jpg" alt="Your Logo" style="max-height: 40px;"></a>
+
+        <!-- Navbar Links -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('all_bookings') }}">View All Bookings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('all_billings') }}">See All Billings</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-primary" href="/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-5">
+        <div class="jumbotron animated fadeIn">
+            <h1 class="display-4">Greetings, Traveler!</h1>
+            <p class="lead">Embark on your next journey with these exciting options:</p>
+            <hr class="my-4">
+
+            <!-- Additional Content with Hover Effects -->
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card mb-4" style="background-color: #EBE8E7; /* Light Goldenrod Yellow */ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                        <div class="card-body">
+                            <h5 class="card-title">Explore Bus Journeys</h5>
+                            <p class="card-text">
+                                Discover diverse bus options for your travels. From scenic routes to express journeys, find the perfect ride for your next destination.
+                            </p>
+                            <a href="{{ url_for('all_buses') }}" class="btn btn-success btn-lg btn-block" role="button">Find Your Bus</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4" style="background-color: #EBE8E7; /* Light Goldenrod Yellow */ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                        <div class="card-body">
+                            <h5 class="card-title">Discover Exciting Packages</h5>
+                            <p class="card-text">
+                                Browse through curated travel packages designed for every adventurer. Create lasting memories with our specially crafted experiences.
+                            </p>
+                            <a href="{{ url_for('all_packages') }}" class="btn btn-info btn-lg btn-block" role="button">Explore Packages</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4" style="background-color: #EBE8E7; /* Light Goldenrod Yellow */ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                        <div class="card-body">
+                            <h5 class="card-title">Find Comfortable Hotels</h5>
+                            <p class="card-text">
+                                Explore featured hotels for a delightful stay. From luxury accommodations to cozy retreats, we have the perfect options for every traveler.
+                            </p>
+                            <a href="{{ url_for('all_hotels') }}" class="btn btn-info btn-lg btn-block" role="button">Discover Hotels</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-{%endblock%}
+
+    <!-- CSS for Hover Effects -->
+    <style>
+        .card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary:hover {
+            background-color: #ff8080; /* Light Red */
+        }
+
+        .btn-success:hover,
+        .btn-info:hover {
+            background-color: #5a2b0b; /* Dark Brown */
+            color: #fff; /* White text for better visibility on dark background */
+        }
+    </style>
+{% endblock %}

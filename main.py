@@ -4,7 +4,7 @@ from flask_login import UserMixin, LoginManager, login_user, login_required, log
 from datetime import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:hrishi2003@localhost:3306/wanderlust'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:hrishi2003@localhost:3306/trip'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'your_secret_key'
 db = SQLAlchemy(app)
@@ -388,6 +388,29 @@ def all_rooms(hotel_id):
 
     return 'You are not authorized to access this page.'
 
+# Route to show all bookings for the logged-in user
+@app.route('/all_bookings')
+@login_required  # Use the @login_required decorator to ensure the user is logged in
+def all_bookings():
+    bookings = Booking.query.filter_by(UserID=current_user.UserID).all()
+    return render_template('all_bookings.html', bookings=bookings)
+
+# Route to show all billings for the logged-in user
+@app.route('/all_billings')
+@login_required
+def all_billings():
+    billings = BillingDetail.query.filter_by(UserID=current_user.UserID).all()
+    return render_template('all_billings.html', billings=billings)
+
+
+# Assuming your app variable is named 'app'
+@app.route('/generate_bill/<int:billing_id>', methods=['GET'])
+def generate_bill(billing_id):
+    # Retrieve billing details based on billing_id (Assuming you have a Billing model)
+    billing = BillingDetail.query.get_or_404(billing_id)
+
+    # Pass billing details to the 'bill.html' template
+    return render_template('bill.html', billing=billing)
 # ... (previous imports)
 
 @app.route('/book/<string:service_type>/<int:service_id>', methods=['GET', 'POST'])
@@ -396,8 +419,7 @@ def book(service_type, service_id):
     if not isinstance(current_user, User):
         return 'You are not authorized to access this page.'
 
-    service_types = {'bus': Bus, 'room': Room
-        , 'package': Package}
+    service_types = {'bus': Bus, 'room': Room, 'package': Package}
 
     if service_type not in service_types:
         abort(404)  # Invalid service type
@@ -415,7 +437,7 @@ def book(service_type, service_id):
     discounted_price = float(total_price) - discount_amount
     tax_amount = 0.07 * float(discounted_price)
     grand_total = float(discounted_price) + tax_amount
-
+    print(service.ServiceProviderID)
     if request.method == 'POST':
         try:
             # Process the booking form data
@@ -429,7 +451,7 @@ def book(service_type, service_id):
                 BusID=service_id if service_type == 'bus' else None,
                 PackageID=service_id if service_type == 'package' else None
             )
-
+            print(service.ServiceProviderID)
             db.session.add(new_booking)
             db.session.commit()
 
@@ -617,7 +639,7 @@ def add_package():
                 Price=price,
                 Duration=duration
             )
-
+            print(Package.ServiceProviderID)
             # Add the new package to the database
             db.session.add(new_package)
             db.session.commit()
@@ -844,4 +866,4 @@ def update_room(room_id):
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0", port=3300)
