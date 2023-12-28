@@ -1,0 +1,27 @@
+<!-- templates/provider_dashboard.html -->
+{% extends 'base.html' %}
+
+{% block title %}Provider Dashboard{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header bg-light text-dark">
+            <h1 class="card-title">Provider Dashboard - {{ username }}</h1>
+        </div>
+        <div class="card-body">
+            <h2>Bookings</h2>
+            <ul>
+                {% for booking in bookings %}
+                    <li>
+                        Booking ID: {{ booking.BookingID }}<br>
+                        Booking Date: {{ booking.BookingDate }}<br>
+                        Total Price: ${{ booking.TotalPrice }}<br>
+                        Booking Type: {{ booking.BookingType }}<br>
+                        <!-- Add more information as needed -->
+                    </li>
+                    <br>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

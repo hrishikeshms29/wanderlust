@@ -865,6 +865,18 @@ def update_room(room_id):
     return 'You are not authorized to access this page.'
 
 
+@app.route('/provider_dashboard')
+@login_required
+def provider_dashboard():
+    if isinstance(current_user, ServiceProvider):
+        # Retrieve all bookings and billings for the logged-in service provider
+        bookings = Booking.query.filter_by(ServiceProviderID=current_user.ServiceProviderID).all()
+
+        return render_template('provider_dashboard.html', username=current_user.Username, bookings=bookings)
+
+    return 'You are not authorized to access this page.'
+
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()

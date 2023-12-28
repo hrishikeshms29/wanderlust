@@ -30,7 +30,7 @@
                 <div class="col-md-4 mb-4">
                     <div class="card">
                         <!-- Add an image if available -->
-                        <!-- <img src="{{ url_for('static', filename='images/' + package.Image) }}" class="card-img-top" alt="{{ package.PackageName }} Image"> -->
+                        <img src="{{ url_for('static', filename='images/' + (package.Image or 'default_image.jpg')) }}" class="card-img-top" alt="{{ package.PackageName }} Image">
                         <div class="card-body">
                             <h5 class="card-title">{{ package.PackageName }}</h5>
                             <p class="card-text">{{ package.Description }}</p>

@@ -11,9 +11,9 @@
                 <div class="card-body">
                     <h5 class="card-title">Billing ID: {{ billing.BillingID }}</h5>
                     <p class="card-text"><strong>Billing Date:</strong> {{ billing.BillingDate.strftime('%Y-%m-%d %H:%M:%S') }}</p>
-                    <p class="card-text"><strong>Total Amount:</strong> ${{ billing.TotalAmount }}</p>
-                    <p class="card-text"><strong>Discount Amount:</strong> ${{ billing.DiscountAmount }}</p>
-                    <p class="card-text"><strong>Grand Total:</strong> ${{ billing.GrandTotal }}</p>
+                    <p class="card-text"><strong>Total Amount:</strong> ₹{{ billing.TotalAmount }}</p>
+                    <p class="card-text"><strong>Discount Amount:</strong> ₹{{ billing.DiscountAmount }}</p>
+                    <p class="card-text"><strong>Grand Total:</strong> ₹{{ billing.GrandTotal }}</p>
                     <a href="{{ url_for('generate_bill', billing_id=billing.BillingID) }}" class="btn btn-primary">Generate Bill</a>
                     <!-- Add more details based on your model -->
                 </div>
