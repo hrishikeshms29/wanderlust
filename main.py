@@ -498,13 +498,15 @@ def add_hotel():
             hotel_name = request.form['hotel_name']
             location = request.form['location']
             description = request.form['description']
+            image_url = request.form['image_url']  # Match the name to the form key
 
             # Create a new hotel instance
             new_hotel = Hotel(
                 ServiceProviderID=current_user.ServiceProviderID,
                 HotelName=hotel_name,
                 Location=location,
-                Description=description
+                Description=description,
+                Image=image_url
             )
 
             # Add the new hotel to the database
@@ -536,7 +538,7 @@ def add_room():
             room_number = request.form['room_number']
             capacity = request.form['capacity']
             price_per_night = request.form['price_per_night']
-            image = request.form['image']
+            image_url = request.form['image_url']  # Match the name to the form key
             room_type = request.form['room_type']
 
             # Create a new room instance
@@ -546,7 +548,7 @@ def add_room():
                 RoomNumber=room_number,
                 Capacity=capacity,
                 PricePerNight=price_per_night,
-                Image=image,
+                Image=image_url,
                 RoomType=room_type
             )
 
@@ -568,6 +570,7 @@ def add_room():
 def add_bus():
     if isinstance(current_user, ServiceProvider):
         if request.method == 'POST':
+            print(request.form)
             bus_name = request.form['bus_name']
             departure_city = request.form['departure_city']
             arrival_city = request.form['arrival_city']
@@ -576,8 +579,7 @@ def add_bus():
             price = request.form['price']
 
             # Extract image file from the request
-            image = request.files['image']
-
+            image_url = request.form['image_url']  # Match the name to the form key
             # Convert string representations to appropriate types
             try:
                 departure_time = datetime.strptime(departure_time_str, '%Y-%m-%dT%H:%M')
@@ -596,7 +598,8 @@ def add_bus():
                 DepartureTime=departure_time,
                 ArrivalTime=arrival_time,
                 Price=price,
-                Image=image
+                Image=image_url  # Change this to use the image URL
+
             )
 
             # Add the new bus to the database
@@ -622,6 +625,7 @@ def add_package():
             description = request.form['description']
             price = request.form['price']
             duration = request.form['duration']
+            image_url = request.form['image_url']  # Match the name to the form key
 
             # Convert string representations to appropriate types
             try:
@@ -637,7 +641,8 @@ def add_package():
                 PackageName=package_name,
                 Description=description,
                 Price=price,
-                Duration=duration
+                Duration=duration,
+                Image=image_url
             )
             print(Package.ServiceProviderID)
             # Add the new package to the database

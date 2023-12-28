@@ -5,7 +5,7 @@
 
 {% block content %}
     <div class="card">
-        <div class="card-header">
+        <div class="card-header" style="background-color: #8f5b34; color: #ffffff;">
             <h2 class="card-title">New Hotel</h2>
         </div>
         <div class="card-body">
@@ -15,9 +15,73 @@
                     <input type="text" class="form-control" name="hotel_name" required>
                 </div>
 
-                <div class="form-group">
-                    <label for="location">Location:</label>
-                    <input type="text" class="form-control" name="location" required>
+<!--                <div class="form-group">-->
+<!--                    <label for="location">Location:</label>-->
+<!--                    <input type="text" class="form-control" name="location" required>-->
+<!--                </div>-->
+<div class="form-group">
+                    <label for="location">Arrival City:</label>
+                    <select class="form-control" name="location" id="location" required>
+                        <!-- Add an empty option for a placeholder -->
+                        <option value="" disabled selected>Select Arrival City</option>
+                        <!-- Add options for predefined cities -->
+                        <option value="Agra">Agra</option>
+                        <option value="Ahmedabad">Ahmedabad</option>
+                        <option value="Alappuzha">Alappuzha</option>
+                        <option value="Amritsar">Amritsar</option>
+                        <option value="Bangalore">Bangalore</option>
+                        <option value="Bhopal">Bhopal</option>
+                        <option value="Chandigarh">Chandigarh</option>
+                        <option value="Chennai">Chennai</option>
+                        <option value="Chikmagalur">Chikmagalur</option>
+                        <option value="Coimbatore">Coimbatore</option>
+                        <option value="Coorg">Coorg</option>
+                        <option value="Dalhousie">Dalhousie</option>
+                        <option value="Dandeli">Dandeli</option>
+                        <option value="Dehradun">Dehradun</option>
+                        <option value="Delhi">Delhi</option>
+                        <option value="Dharwad">Dharwad</option>
+                        <option value="Gwalior">Gwalior</option>
+                        <option value="Goa">Goa</option>
+                        <option value="Gokarna">Gokarna</option>
+                        <option value="Guwahati">Guwahati</option>
+                        <option value="Halebidu">Halebidu</option>
+                        <option value="Hampi">Hampi</option>
+                        <option value="Haridwar">Haridwar</option>
+                        <option value="Hubballi">Hubballi</option>
+                        <option value="Hyderabad">Hyderabad</option>
+                        <option value="Indore">Indore</option>
+                        <option value="Jaipur">Jaipur</option>
+                        <option value="Jamshedpur">Jamshedpur</option>
+                        <option value="Jammu">Jammu</option>
+                        <option value="Jodhpur">Jodhpur</option>
+                        <option value="Kanchipuram">Kanchipuram</option>
+                        <option value="Kolkata">Kolkata</option>
+                        <option value="Lucknow">Lucknow</option>
+                        <option value="Ludhiana">Ludhiana</option>
+                        <option value="Madurai">Madurai</option>
+                        <option value="Mangalore">Mangalore</option>
+                        <option value="Manali">Manali</option>
+                        <option value="Munnar">Munnar</option>
+                        <option value="Mysore">Mysore</option>
+                        <option value="Nagpur">Nagpur</option>
+                        <option value="Nashik">Nashik</option>
+                        <option value="Patna">Patna</option>
+                        <option value="Pune">Pune</option>
+                        <option value="Raipur">Raipur</option>
+                        <option value="Ranchi">Ranchi</option>
+                        <option value="Rishikesh">Rishikesh</option>
+                        <option value="Shimla">Shimla</option>
+                        <option value="Srinagar">Srinagar</option>
+                        <option value="Surat">Surat</option>
+                        <option value="Thanjavur">Thanjavur</option>
+                        <option value="Trivandrum">Trivandrum</option>
+                        <option value="Udaipur">Udaipur</option>
+                        <option value="Vadodara">Vadodara</option>
+                        <option value="Varanasi">Varanasi</option>
+                        <option value="Visakhapatnam">Visakhapatnam</option>
+                        <!-- Add other cities here -->
+                    </select>
                 </div>
 
                 <div class="form-group">
@@ -25,10 +89,10 @@
                     <textarea class="form-control" name="description" required></textarea>
                 </div>
 
-                <div class="form-group">
-                    <label for="image">Image:</label>
-                    <input type="file" class="form-control-file" name="image" accept="image/*" required>
-                </div>
+                                 <div class="form-group">
+    <label for="image_url">Image URL:</label>
+    <input type="url" class="form-control" name="image_url" placeholder="Enter Image URL" required>
+</div>
 
                 <button type="submit" class="btn btn-primary">Add Hotel</button>
             </form>

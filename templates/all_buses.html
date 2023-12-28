@@ -37,7 +37,8 @@
                     <div class="card">
                         <div class="row no-gutters">
                             <div class="col-md-4">
-                                <img src="{{ url_for('static', filename='images/' + bus.Image) }}" class="card-img" alt="{{ bus.BusName }} Image">
+<img src="{{ bus.Image }}" onerror="this.src='https://www.shutterstock.com/image-vector/bus-icon-600nw-582174946.jpg'" class="card-img" alt="{{ bus.BusName }} Image">
+
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
